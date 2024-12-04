@@ -19,7 +19,7 @@ async def workspace():
 
 @pytest.fixture(scope="module")
 def executor_image() -> Generator[str, None, None]:
-    tag = "executor-test"
+    tag = "gradion/executor-test"
     deps_path = Path(__file__).parent / "dependencies.txt"
 
     # Build the image using the CLI

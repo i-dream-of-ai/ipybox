@@ -6,6 +6,7 @@ __pycache__
 .env
 .vscode
 .idea
+auth.toml
 data
 dist
 output
