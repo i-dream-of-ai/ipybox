@@ -64,6 +64,8 @@ The dependencies file should list Python packages in [Poetry dependency specific
 
 ## Usage
 
+The following examples demonstrate how to use the `ExecutionContainer` and `ExecutionClient` context managers to execute Python code in an IPython environment running in a Docker container. Runnable scripts of the following code snippets are available in the [examples](examples/) directory.
+
 ### Basic usage
 
 Here's a simple example that demonstrates how to execute Python code in an execution container. The `ExecutionContainer` context manager creates and starts a container for code execution, and the `ExecutionClient` context manager connects to an IPython kernel running in the container. The example below executes the code `print('Hello, world!')` and prints the output text:
@@ -88,8 +90,6 @@ The default image used by `ExecutionContainer` is `gradion/executor`. You can sp
 Code execution within the same client context is stateful i.e. you can reference variables from previous executions. Code executions in different client contexts are isolated from each other:
 
 ```python
-from gradion.executor import ExecutionContainer, ExecutionClient, ExecutionError
-
 async with ExecutionContainer() as container:
     async with ExecutionClient(host="localhost", port=container.port) as client_1:
         # Execute code that defines variable x
@@ -120,22 +120,23 @@ async with ExecutionContainer() as container:
         import time
         for i in range(5):
             print(f"Processing step {i}")
-            time.sleep(0.1)
+            time.sleep(1)
         """
 
         # Submit the execution and stream the output
         execution = await client.submit(code)
         async for chunk in execution.stream():
-            print(f"Received output: {chunk}")
             # Output will be printed gradually:
+            print(f"Received output: {chunk}")
             # Received output: Processing step 0
             # Received output: Processing step 1
             # Received output: Processing step 2
             # Received output: Processing step 3
             # Received output: Processing step 4
 
-        # Get the aggregated output as a single result
+        # Get the aggregated result
         result = await execution.result()
+        # Print the aggregated output text
         print(f"Aggregated output:\n{result.text}")
         # Aggregated output:
         # Processing step 0
@@ -160,6 +161,7 @@ async with ExecutionContainer() as container:
             import einops
             print(einops.__version__)
         """)
+        print(f"Output: {result.text}")  # Output: 0.8.0
 ```
 
 ### Creating and returning plots
@@ -213,6 +215,10 @@ binds = {
     "./output": "output"  # Write results to host
 }
 
+# Create a data file on the host
+async with aiofiles.open("data/input.txt", "w") as f:
+    await f.write("hello world")
+
 async with ExecutionContainer(binds=binds) as container:
     async with ExecutionClient(host="localhost", port=container.port) as client:
         # Read from mounted data directory
@@ -227,6 +233,10 @@ async with ExecutionContainer(binds=binds) as container:
             with open('output/result.txt', 'w') as f:
                 f.write(processed)
         """)
+
+# Check the result file on the host
+async with aiofiles.open("output/result.txt", "r") as f:
+    assert await f.read() == "HELLO WORLD"
 ```
 
 ### Environment variables
@@ -252,4 +262,7 @@ async with ExecutionContainer(env=env) as container:
             if debug:
                 print("Debug mode enabled")
         """)
+        print(result.text)
+        # Using API key: secret-key-123
+        # Debug mode enabled
 ```
