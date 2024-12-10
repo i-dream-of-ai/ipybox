@@ -31,13 +31,13 @@ ENV PATH="${HOME}/poetry/bin:${PATH}"
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
 COPY --chown=appuser:appuser environment.yml ${HOME}/
-RUN conda env create -f ${HOME}/environment.yml -n executor && conda init bash
+RUN conda env create -f ${HOME}/environment.yml -n ipybox && conda init bash
 
 COPY --chown=appuser:appuser pyproject.toml ${HOME}/
 RUN poetry config virtualenvs.create false
-RUN conda run -n executor poetry install --only main
+RUN conda run -n ipybox poetry install --only main
 
 COPY --chown=appuser:appuser server.sh ${HOME}/
 RUN chmod +x ${HOME}/server.sh
 
-CMD ["/bin/bash", "-c", "source ${HOME}/conda/etc/profile.d/conda.sh && conda activate executor && ${HOME}/server.sh"]
+CMD ["/bin/bash", "-c", "source ${HOME}/conda/etc/profile.d/conda.sh && conda activate ipybox && ${HOME}/server.sh"]

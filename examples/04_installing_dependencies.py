@@ -4,7 +4,7 @@ Example demonstrating how to install dependencies at runtime.
 
 import asyncio
 
-from gradion.executor import ExecutionClient, ExecutionContainer
+from ipybox import ExecutionClient, ExecutionContainer
 
 
 async def main():

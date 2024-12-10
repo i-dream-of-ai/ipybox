@@ -159,7 +159,7 @@ class ExecutionClient:
         heartbeat_interval: Interval in seconds between heartbeat pings. Defaults to 10.
 
     Example:
-        >>> from gradion.executor import ExecutionContainer
+        >>> from ipybox import ExecutionClient
         >>> binds = {"/host/path": "example/path"}
         >>> env = {"API_KEY": "secret"}
         >>> async with ExecutionContainer(binds=binds, env=env) as container:

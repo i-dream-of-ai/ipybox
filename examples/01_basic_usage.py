@@ -4,12 +4,12 @@ Basic usage example demonstrating how to execute Python code in an execution con
 
 import asyncio
 
-from gradion.executor import ExecutionClient, ExecutionContainer
+from ipybox import ExecutionClient, ExecutionContainer
 
 
 async def main():
     # Create and start a container for code execution
-    async with ExecutionContainer(tag="gradion/executor") as container:
+    async with ExecutionContainer(tag="gradion/ipybox") as container:
         # Create and connect to an IPython kernel
         async with ExecutionClient(host="localhost", port=container.port) as client:
             # Execute Python code and await the result

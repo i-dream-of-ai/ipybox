@@ -23,7 +23,7 @@ async def main():
     async with aiofiles.open("data/input.txt", "w") as f:
         await f.write("hello world")
 
-    from gradion.executor import ExecutionClient, ExecutionContainer
+    from ipybox import ExecutionClient, ExecutionContainer
 
     async with ExecutionContainer(binds=binds) as container:  # type: ignore
         async with ExecutionClient(host="localhost", port=container.port) as client:

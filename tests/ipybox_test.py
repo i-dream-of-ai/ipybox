@@ -8,7 +8,7 @@ import aiofiles
 import pytest
 from PIL import Image
 
-from gradion.executor import ExecutionClient, ExecutionContainer, ExecutionError
+from ipybox import ExecutionClient, ExecutionContainer, ExecutionError
 
 
 @pytest.fixture(scope="module")
@@ -19,12 +19,12 @@ async def workspace():
 
 @pytest.fixture(scope="module")
 def executor_image() -> Generator[str, None, None]:
-    tag = "gradion/executor-test"
+    tag = "gradion/ipybox-test"
     deps_path = Path(__file__).parent / "dependencies.txt"
 
     # Build the image using the CLI
     subprocess.run(
-        ["python", "-m", "gradion.executor", "build", "-t", tag, "-d", str(deps_path)],
+        ["python", "-m", "ipybox", "build", "-t", tag, "-d", str(deps_path)],
         check=True,
     )
 

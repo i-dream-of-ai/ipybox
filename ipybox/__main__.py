@@ -7,7 +7,7 @@ from typing import Annotated
 
 import typer
 
-from gradion.executor.container import DEFAULT_TAG
+from ipybox.container import DEFAULT_TAG
 
 pkg_path = Path(__file__).parent
 app = typer.Typer()

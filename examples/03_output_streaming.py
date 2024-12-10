@@ -4,7 +4,7 @@ Example demonstrating output streaming during code execution.
 
 import asyncio
 
-from gradion.executor import ExecutionClient, ExecutionContainer
+from ipybox import ExecutionClient, ExecutionContainer
 
 
 async def main():

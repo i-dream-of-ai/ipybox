@@ -1,6 +1,6 @@
-# Python Code Execution Container
+# ipybox
 
-A secure, lightweight open source solution for executing Python code in an isolated environment, specifically designed for AI/ML applications and LLM agents.
+A secure, lightweight Python code execution sandbox based on IPython and Docker, specifically designed for AI/ML applications and LLM agents.
 
 <p align="center">
   <img src="docs/logo.png" alt="logo">
@@ -14,18 +14,18 @@ This project provides a sandboxed Python code execution environment built on IPy
 - **Flexible Dependencies**: Supports static and runtime dependency management
 - **Real-time Streaming**: Chunked streaming of execution output as it's generated
 - **Image Support**: Handle image outputs from matplotlib and other visualization libraries
-- **Resource Control**: Built-in timeout mechanisms and container lifecycle management
+- **Resource Control**: Container lifecycle management and built-in timeout mechanisms
 - **Reproducible Environment**: Consistent execution environment across different systems
 - **LLM Agent Ready**: Ideal for AI applications that need to execute Python code
 
-This project is currently in beta, with active development of new features ongoing.
+This project is in early beta, with active development of new features ongoing.
 
 ## Installation
 
 ### Python package
 
 ```bash
-pip install gradion-executor
+pip install ipybox
 ```
 
 ### Container image
@@ -37,10 +37,10 @@ pip install gradion-executor
 To build a container image with default settings and no extra dependencies:
 
 ```bash
-python -m gradion.executor build
+python -m ipybox build
 ```
 
-This creates a Docker image tagged as `gradion/executor` with base Python dependencies required for the code execution environment.
+This creates a Docker image tagged as `gradion/ipybox` with base Python dependencies required for the code execution environment.
 
 #### Custom build
 
@@ -55,8 +55,8 @@ matplotlib = "^3.9"
 To build the image with custom tag and dependencies:
 
 ```bash
-python -m gradion.executor build \
-    --tag my-executor:v1 \
+python -m ipybox build \
+    --tag my-box:v1 \
     --dependencies path/to/dependencies.txt
 ```
 
@@ -83,7 +83,7 @@ async with ExecutionContainer(tag="gradion/executor") as container:
         print(f"Output: {result.text}")  # Output: Hello, world!
 ```
 
-The default image used by `ExecutionContainer` is `gradion/executor`. You can specify a custom image with the `tag` argument like in `ExecutionContainer(tag="my-executor:v1")`, for example.
+The default image used by `ExecutionContainer` is `gradion/executor`. You can specify a custom image with the `tag` argument like in `ExecutionContainer(tag="my-box:v1")`, for example.
 
 ### State management
 
