@@ -71,10 +71,10 @@ The following examples demonstrate how to use the `ExecutionContainer` and `Exec
 Here's a simple example that demonstrates how to execute Python code in an execution container. The `ExecutionContainer` context manager creates and starts a container for code execution, and the `ExecutionClient` context manager connects to an IPython kernel running in the container. The example below executes the code `print('Hello, world!')` and prints the output text:
 
 ```python
-from gradion.executor import ExecutionContainer, ExecutionClient
+from ipybox import ExecutionContainer, ExecutionClient
 
 # Create and start a container for code execution
-async with ExecutionContainer(tag="gradion/executor") as container:
+async with ExecutionContainer(tag="gradion/ipybox") as container:
     # Create and connect to an IPython kernel
     async with ExecutionClient(host="localhost", port=container.port) as client:
         # Execute Python code and await the result
@@ -83,7 +83,7 @@ async with ExecutionContainer(tag="gradion/executor") as container:
         print(f"Output: {result.text}")  # Output: Hello, world!
 ```
 
-The default image used by `ExecutionContainer` is `gradion/executor`. You can specify a custom image with the `tag` argument like in `ExecutionContainer(tag="my-box:v1")`, for example.
+The default image used by `ExecutionContainer` is `gradion/ipybox`. You can specify a custom image with the `tag` argument like in `ExecutionContainer(tag="my-box:v1")`, for example.
 
 ### State management
 
