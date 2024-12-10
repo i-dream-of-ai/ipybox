@@ -2,6 +2,8 @@ from pathlib import Path
 
 from aiodocker import Docker
 
+from gradion.executor.utils import arun
+
 DEFAULT_TAG = "gradion/executor"
 
 
@@ -15,7 +17,7 @@ class ExecutionContainer:
         tag: Tag of the Docker image to use (defaults to gradion/executor)
         binds: Mapping of host paths to container paths for volume mounting.
             Host paths may be relative or absolute. Container paths must be relative
-            and are created as subdirectories of `/app` in the container.
+            and are created as subdirectories of `/home/appuser` in the container.
         env: Environment variables to set in the container
 
     Attributes:
@@ -93,7 +95,7 @@ class ExecutionContainer:
                     f"{executor_port}/tcp": [{}]  # random host port
                 },
                 "AutoRemove": True,
-                "Binds": self._container_binds(),
+                "Binds": await self._container_binds(),
             },
             "Env": self._container_env(),
             "ExposedPorts": {f"{executor_port}/tcp": {}},
@@ -107,8 +109,18 @@ class ExecutionContainer:
 
         return container
 
-    def _container_binds(self) -> list[str]:
-        return [f"{Path(k).resolve()}:/app/{v}" for k, v in self.binds.items()]
+    async def _container_binds(self) -> list[str]:
+        container_binds = []
+        for host_path, container_path in self.binds.items():
+            host_path_resolved = await arun(self._prepare_host_path, host_path)
+            container_binds.append(f"{host_path_resolved}:/home/appuser/{container_path}")
+        return container_binds
+
+    def _prepare_host_path(self, host_path: Path) -> Path:
+        resolved = Path(host_path).resolve()
+        if not resolved.exists():
+            resolved.mkdir(parents=True)
+        return resolved
 
     def _container_env(self) -> list[str]:
         return [f"{k}={v}" for k, v in self.env.items()]

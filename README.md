@@ -30,7 +30,7 @@ pip install gradion-executor
 
 ### Container image
 
-**Note**: The container image build process requires [Docker](https://www.docker.com/) to be installed on your system.
+**Note**: Building the container image requires [Docker](https://www.docker.com/) to be installed. Containers will run with the same user and group IDs as the user who built the image, ensuring proper file permissions on mounted host directories.
 
 #### Default build
 

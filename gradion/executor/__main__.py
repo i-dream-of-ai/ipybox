@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 import tempfile
@@ -50,9 +51,19 @@ def build(
         shutil.copy(pkg_path / "docker" / "Dockerfile", tmp_path)
         shutil.copy(pkg_path / "scripts" / "server.sh", tmp_path)
 
-        process = subprocess.Popen(
-            ["docker", "build", "-t", tag, str(tmp_path)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
-        )
+        build_cmd = [
+            "docker",
+            "build",
+            "-t",
+            tag,
+            str(tmp_path),
+            "--build-arg",
+            f"UID={os.getuid()}",
+            "--build-arg",
+            f"GID={os.getgid()}",
+        ]
+
+        process = subprocess.Popen(build_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 
         while True:
             output = process.stdout.readline()  # type: ignore
