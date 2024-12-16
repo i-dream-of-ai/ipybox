@@ -25,14 +25,18 @@ class ExecutionContainer:
             allocated when the container is started.
 
     Example:
-        >>> from ipybox import ExecutionClient
-        >>> binds = {"/host/path": "example/path"}
-        >>> env = {"API_KEY": "secret"}
-        >>> async with ExecutionContainer(binds=binds, env=env) as container:
-        ...     async with ExecutionClient(host="localhost", port=container.port) as client:
-        ...         result = await client.execute("print('Hello, world!')")
-        ...         print(result.text)
-        Hello, world!
+        ```python
+        from ipybox import ExecutionClient
+
+        binds = {"/host/path": "example/path"}
+        env = {"API_KEY": "secret"}
+
+        async with ExecutionContainer(binds=binds, env=env) as container:
+            async with ExecutionClient(host="localhost", port=container.port) as client:
+                result = await client.execute("print('Hello, world!')")
+                print(result.text)
+        ```
+        > Hello, world!
     """
 
     def __init__(

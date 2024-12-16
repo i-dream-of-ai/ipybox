@@ -10,3 +10,5 @@ auth.toml
 data
 dist
 output
+site/
+dependencies.txt
