@@ -120,7 +120,7 @@ class ExecutionContainer:
             container_binds.append(f"{host_path_resolved}:/home/appuser/{container_path}")
         return container_binds
 
-    def _prepare_host_path(self, host_path: Path) -> Path:
+    def _prepare_host_path(self, host_path: str) -> Path:
         resolved = Path(host_path).resolve()
         if not resolved.exists():
             resolved.mkdir(parents=True)
