@@ -8,8 +8,9 @@ from ipybox import ExecutionClient, ExecutionContainer
 
 
 async def main():
+    # --8<-- [start:usage]
     async with ExecutionContainer() as container:
-        async with ExecutionClient(host="localhost", port=container.port) as client:
+        async with ExecutionClient(port=container.port) as client:
             execution = await client.submit("""
                 !pip install matplotlib
 
@@ -23,24 +24,14 @@ async def main():
                 plt.show()
 
                 print("Plot generation complete!")
-                """)
+                """)  # (1)!
 
-            # Stream the output text as it's generated
-            print("Installation and plot generation progress:")
-            async for chunk in execution.stream():
+            async for chunk in execution.stream():  # (2)!
                 print(chunk, end="", flush=True)
 
-            # Obtain the execution result
             result = await execution.result()
-            assert "Plot generation complete!" in result.text
-
-            # Save the created plot
-            if result.images:
-                output_path = "sine_wave.png"
-                result.images[0].save(output_path)
-                print(f"\nPlot saved to: {output_path}")
-            else:
-                print("\nNo images were generated")
+            result.images[0].save("sine.png")  # (3)!
+    # --8<-- [end:usage]
 
 
 if __name__ == "__main__":

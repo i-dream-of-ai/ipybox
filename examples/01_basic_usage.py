@@ -4,19 +4,21 @@ Basic usage example demonstrating how to execute Python code in an execution con
 
 import asyncio
 
+# --8<-- [start:import]
 from ipybox import ExecutionClient, ExecutionContainer
+
+# --8<-- [end:import]
 
 
 async def main():
-    # Create and start a container for code execution
-    async with ExecutionContainer(tag="gradion/ipybox") as container:
-        # Create and connect to an IPython kernel
-        async with ExecutionClient(host="localhost", port=container.port) as client:
-            # Execute Python code and await the result
-            result = await client.execute("print('Hello, world!')")
-            # Print the execution output text
-            print(f"Output: {result.text}")  # Output: Hello, world!
+    # --8<-- [start:usage]
+    async with ExecutionContainer(tag="gradion-ai/ipybox") as container:  # (1)!
+        async with ExecutionClient(port=container.port) as client:  # (2)!
+            result = await client.execute("print('Hello, world!')")  # (3)!
+            print(f"Output: {result.text}")  # (4)!
 
+
+# --8<-- [end:usage]
 
 if __name__ == "__main__":
     asyncio.run(main())

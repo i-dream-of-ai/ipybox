@@ -4,7 +4,7 @@ from aiodocker import Docker
 
 from ipybox.utils import arun
 
-DEFAULT_TAG = "gradion/ipybox"
+DEFAULT_TAG = "gradion-ai/ipybox"
 
 
 class ExecutionContainer:
@@ -14,7 +14,7 @@ class ExecutionContainer:
     It handles the creation, port mapping, volume binding, and cleanup of the container.
 
     Args:
-        tag: Tag of the Docker image to use (defaults to gradion/ipybox)
+        tag: Tag of the Docker image to use (defaults to gradion-ai/ipybox)
         binds: Mapping of host paths to container paths for volume mounting.
             Host paths may be relative or absolute. Container paths must be relative
             and are created as subdirectories of `/home/appuser` in the container.
@@ -25,20 +25,24 @@ class ExecutionContainer:
             allocated when the container is started.
 
     Example:
-        >>> from ipybox import ExecutionClient
-        >>> binds = {"/host/path": "example/path"}
-        >>> env = {"API_KEY": "secret"}
-        >>> async with ExecutionContainer(binds=binds, env=env) as container:
-        ...     async with ExecutionClient(host="localhost", port=container.port) as client:
-        ...         result = await client.execute("print('Hello, world!')")
-        ...         print(result.text)
-        Hello, world!
+        ```python
+        from ipybox import ExecutionClient, ExecutionContainer
+
+        binds = {"/host/path": "example/path"}
+        env = {"API_KEY": "secret"}
+
+        async with ExecutionContainer(binds=binds, env=env) as container:
+            async with ExecutionClient(host="localhost", port=container.port) as client:
+                result = await client.execute("print('Hello, world!')")
+                print(result.text)
+        ```
+        > Hello, world!
     """
 
     def __init__(
         self,
         tag: str = DEFAULT_TAG,
-        binds: dict[Path | str, str] | None = None,
+        binds: dict[str, str] | None = None,
         env: dict[str, str] | None = None,
     ):
         self.tag = tag

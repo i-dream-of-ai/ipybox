@@ -1,10 +1,10 @@
-# ipybox
+# Overview
 
 `ipybox` is a lightweight, stateful and secure Python code execution sandbox built with [IPython](https://ipython.org/) and [Docker](https://www.docker.com/). Designed for AI agents that interact with their environment through code execution, it is also well-suited for general-purpose code execution. Fully open-source and free to use, ipybox is distributed under the Apache 2.0 license.
 
-<p align="center">
-  <img src="docs/img/logo.png" alt="logo">
-</p>
+<figure markdown>
+  ![logo](img/logo.png){ width="400" style="display: block; margin: 0 auto" }
+</figure>
 
 ## Features
 
@@ -17,60 +17,3 @@
 - **Reproducible Environments**: Provides a consistent execution setup across different systems to ensure reproducibility.
 
 This project is in early beta, with active development of new features ongoing.
-
-## Documentation
-
-The official documentation is available [here](https://gradion-ai.github.io/ipybox/).
-
-## Quickstart
-
-Install `ipybox` Python package:
-
-```bash
-pip install ipybox
-```
-
-Build a `gradion-ai/ipybox` Docker image:
-
-```bash
-python -m ipybox build -t gradion-ai/ipybox
-```
-
-Print *Hello, world!* inside `ipybox`:
-
-```python
-from ipybox import ExecutionClient, ExecutionContainer
-
-async with ExecutionContainer(tag="gradion-ai/ipybox") as container:
-    async with ExecutionClient(port=container.port) as client:
-        result = await client.execute("print('Hello, world!')")
-        print(result.text)  # Hello, world!
-```
-
-## Development
-
-Clone the repository:
-
-```bash
-git clone https://github.com/gradion-ai/ipybox.git
-cd ipybox
-```
-
-Create a new Conda environment and activate it:
-
-```bash
-conda env create -f environment.yml
-conda activate ipybox
-```
-
-Install dependencies with Poetry:
-
-```bash
-poetry install --with docs
-```
-
-Run tests:
-
-```bash
-pytest -s tests
-```

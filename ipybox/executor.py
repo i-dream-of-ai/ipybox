@@ -31,7 +31,7 @@ class ExecutionError(Exception):
         trace: Stack trace string representation
     """
 
-    def __init__(self, message, trace=None):
+    def __init__(self, message: str, trace: str | None = None):
         super().__init__(message)
         self.trace = trace
 
@@ -159,19 +159,23 @@ class ExecutionClient:
         heartbeat_interval: Interval in seconds between heartbeat pings. Defaults to 10.
 
     Example:
-        >>> from ipybox import ExecutionClient
-        >>> binds = {"/host/path": "example/path"}
-        >>> env = {"API_KEY": "secret"}
-        >>> async with ExecutionContainer(binds=binds, env=env) as container:
-        ...     async with ExecutionClient(host="localhost", port=container.port) as client:
-        ...         result = await client.execute("print('Hello, world!')")
-        ...         print(result.text)
-        Hello, world!
+        ```python
+        from ipybox import ExecutionClient, ExecutionContainer
+
+        binds = {"/host/path": "example/path"}
+        env = {"API_KEY": "secret"}
+
+        async with ExecutionContainer(binds=binds, env=env) as container:
+            async with ExecutionClient(host="localhost", port=container.port) as client:
+                result = await client.execute("print('Hello, world!')")
+                print(result.text)
+        ```
+        > Hello, world!
     """
 
-    def __init__(self, host: str, port: int, heartbeat_interval: float = 10):
-        self.host = host
+    def __init__(self, port: int, host: str = "localhost", heartbeat_interval: float = 10):
         self.port = port
+        self.host = host
 
         self._heartbeat_interval = heartbeat_interval
         self._heartbeat_callback = None
