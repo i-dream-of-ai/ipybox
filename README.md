@@ -36,16 +36,23 @@ Build a `gradion-ai/ipybox` Docker image:
 python -m ipybox build -t gradion-ai/ipybox
 ```
 
-Print *Hello, world!* inside `ipybox`:
+Print something inside `ipybox`:
 
 ```python
+import asyncio
 from ipybox import ExecutionClient, ExecutionContainer
 
-async with ExecutionContainer(tag="gradion-ai/ipybox") as container:
-    async with ExecutionClient(port=container.port) as client:
-        result = await client.execute("print('Hello, world!')")
-        print(result.text)  # Hello, world!
+async def main():
+    async with ExecutionContainer(tag="gradion-ai/ipybox") as container:
+        async with ExecutionClient(port=container.port) as client:
+            result = await client.execute("print('Hello, world!')")
+            print(f"Output: {result.text}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
+
+Find out more in the [user guide](https://gradion-ai.github.io/ipybox/).
 
 ## Development
 
