@@ -70,7 +70,8 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      dedent_subsections: true
   - pymdownx.superfences
   - pymdownx.details
   - attr_list
@@ -78,8 +79,8 @@ markdown_extensions:
   - admonition
 
 nav:
-  - Get Started:
-    - Welcome to ipybox: index.md
+  - User Guide:
+    - Overview: index.md
     - Installation: installation.md
     - Usage: usage.md
   - API Documentation:

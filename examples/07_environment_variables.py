@@ -8,12 +8,12 @@ from ipybox import ExecutionClient, ExecutionContainer
 
 
 async def main():
+    # --8<-- [start:usage]
     # Define environment variables for the container
-    env = {"API_KEY": "secret-key-123", "DEBUG": "1"}
+    env = {"API_KEY": "secret-key-123", "DEBUG": "1"}  # (1)!
 
     async with ExecutionContainer(env=env) as container:
-        async with ExecutionClient(host="localhost", port=container.port) as client:
-            # Access environment variables in executed code
+        async with ExecutionClient(port=container.port) as client:
             result = await client.execute("""
                 import os
 
@@ -23,9 +23,9 @@ async def main():
                 debug = bool(int(os.environ.get('DEBUG', '0')))
                 if debug:
                     print("Debug mode enabled")
-            """)
-            print("Execution output:")
-            print(result.text)
+            """)  # (2)!
+            print(result.text)  # (3)!
+    # --8<-- [end:usage]
 
 
 if __name__ == "__main__":

@@ -8,18 +8,19 @@ from ipybox import ExecutionClient, ExecutionContainer
 
 
 async def main():
+    # --8<-- [start:usage]
     async with ExecutionContainer() as container:
-        async with ExecutionClient(host="localhost", port=container.port) as client:
-            print("Installing einops package...")
-            # Install the einops package
-            await client.execute("!pip install einops")
+        async with ExecutionClient(port=container.port) as client:
+            execution = await client.submit("!pip install einops")  # (1)!
+            async for chunk in execution.stream():  # (2)!
+                print(chunk, end="", flush=True)
 
-            # Then you can use it in the following code execution
             result = await client.execute("""
                 import einops
                 print(einops.__version__)
-            """)
-            print(f"Output: {result.text}")
+            """)  # (3)!
+            print(f"Output: {result.text}")  # (4)!
+    # --8<-- [end:usage]
 
 
 if __name__ == "__main__":

@@ -8,18 +8,18 @@ import aiofiles
 import pytest
 from PIL import Image
 
-from ipybox import ExecutionClient, ExecutionContainer, ExecutionError
+from ipybox import DEFAULT_TAG, ExecutionClient, ExecutionContainer, ExecutionError
 
 
 @pytest.fixture(scope="module")
 async def workspace():
     with tempfile.TemporaryDirectory() as temp_dir:
-        yield Path(temp_dir)
+        yield temp_dir
 
 
 @pytest.fixture(scope="module")
 def executor_image() -> Generator[str, None, None]:
-    tag = "gradion/ipybox-test"
+    tag = f"{DEFAULT_TAG}-test"
     deps_path = Path(__file__).parent / "dependencies.txt"
 
     # Build the image using the CLI
@@ -32,7 +32,7 @@ def executor_image() -> Generator[str, None, None]:
 
 
 @pytest.fixture(scope="module")
-async def executor(executor_image: str, workspace: Path):
+async def executor(executor_image: str, workspace: str):
     async with ExecutionContainer(
         tag=executor_image,
         binds={workspace: "workspace"},
@@ -172,8 +172,8 @@ async def test_env(executor: ExecutionClient):
 
 
 @pytest.mark.asyncio(loop_scope="module")
-async def test_binds(executor: ExecutionClient, workspace: Path):
-    async with aiofiles.open(workspace / "test_file", "w") as f:
+async def test_binds(executor: ExecutionClient, workspace: str):
+    async with aiofiles.open(Path(workspace) / "test_file", "w") as f:
         await f.write("test_content")
 
     result = await executor.execute("import os; print(open('workspace/test_file').read())")

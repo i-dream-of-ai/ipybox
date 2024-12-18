@@ -160,7 +160,7 @@ class ExecutionClient:
 
     Example:
         ```python
-        from ipybox import ExecutionClient
+        from ipybox import ExecutionClient, ExecutionContainer
 
         binds = {"/host/path": "example/path"}
         env = {"API_KEY": "secret"}
@@ -173,9 +173,9 @@ class ExecutionClient:
         > Hello, world!
     """
 
-    def __init__(self, host: str, port: int, heartbeat_interval: float = 10):
-        self.host = host
+    def __init__(self, port: int, host: str = "localhost", heartbeat_interval: float = 10):
         self.port = port
+        self.host = host
 
         self._heartbeat_interval = heartbeat_interval
         self._heartbeat_callback = None
