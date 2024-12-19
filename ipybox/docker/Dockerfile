@@ -40,4 +40,6 @@ RUN conda run -n ipybox poetry install --only main
 COPY --chown=appuser:appuser server.sh ${HOME}/
 RUN chmod +x ${HOME}/server.sh
 
+COPY --chown=appuser:appuser ipybox/modinfo.py ${HOME}/ipybox/
+
 CMD ["/bin/bash", "-c", "source ${HOME}/conda/etc/profile.d/conda.sh && conda activate ipybox && ${HOME}/server.sh"]

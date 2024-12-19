@@ -239,7 +239,7 @@ class ExecutionClient:
         self.heartbeat_callback.start()
         logger.info(f"Started heartbeat (interval = {self._heartbeat_interval}s)")
 
-        await self._disable_colors()
+        await self._init_kernel()
 
     async def disconnect(self):
         """Closes the connection to the kernel and cleans up resources."""
@@ -300,6 +300,10 @@ class ExecutionClient:
         await self._send_request(req)
         return Execution(client=self, req_id=req_id)
 
+    async def get_module_sources(self, module_names: list[str]) -> str | None:
+        result = await self.execute(f"print_module_sources({module_names})")
+        return result.text
+
     async def _send_request(self, req):
         await self._ws.write_message(json_encode(req))
 
@@ -325,5 +329,5 @@ class ExecutionClient:
         except tornado.iostream.StreamClosedError as e:
             logger.error("Kernel disconnected", e)
 
-    async def _disable_colors(self):
-        await self.execute(r"%colors nocolor")
+    async def _init_kernel(self):
+        await self.execute(r"%colors nocolor" + "\nfrom ipybox.modinfo import print_module_sources, get_module_info")

@@ -47,6 +47,10 @@ def build(
         with open(tmp_path / "pyproject.toml", "w") as f:
             f.write(project_spec.format(dependencies=dependencies_spec))
 
+        ipybox_path = tmp_path / "ipybox"
+        ipybox_path.mkdir()
+
+        shutil.copy(pkg_path / "modinfo.py", tmp_path / "ipybox")
         shutil.copy(pkg_path / "config" / "default" / "environment.yml", tmp_path)
         shutil.copy(pkg_path / "docker" / "Dockerfile", tmp_path)
         shutil.copy(pkg_path / "scripts" / "server.sh", tmp_path)

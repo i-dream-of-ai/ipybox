@@ -1,4 +1,5 @@
 import asyncio
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -178,3 +179,23 @@ async def test_binds(executor: ExecutionClient, workspace: str):
 
     result = await executor.execute("import os; print(open('workspace/test_file').read())")
     assert result.text == "test_content"
+
+
+@pytest.mark.asyncio(loop_scope="module")
+async def test_get_module_source(executor: ExecutionClient):
+    # Get the source through the executor
+    result = await executor.get_module_sources(["ipybox.modinfo"])
+    assert result is not None
+
+    # Load the actual source file
+    modinfo_path = Path("ipybox", "modinfo.py")
+    with open(modinfo_path) as f:
+        actual_source = f.read()
+
+    # Extract the source code from the markdown code block
+    source_match = re.search(r"```python\n# Module: ipybox\.modinfo\n\n(.*?)\n```", result, re.DOTALL)
+    assert source_match is not None
+    extracted_source = source_match.group(1)
+
+    # Compare the sources
+    assert extracted_source.strip() == actual_source.strip()
