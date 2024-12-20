@@ -509,6 +509,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#manual-container-lifecycle-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual container lifecycle management
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -703,6 +712,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#manual-container-lifecycle-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual container lifecycle management
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -744,6 +762,10 @@
 <li>Output: <code>Hello, world!</code></li>
 </ol>
 <p>The default image used by <code>ExecutionContainer</code> is <code>gradion-ai/ipybox</code>. You can specify a custom image with the <code>tag</code> argument like in <code>ExecutionContainer(tag="my-box:v1")</code>, for example.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instead of letting the <code>ExecutionContainer</code> context manager handle the lifecycle of the container, you can also <a href="./#manual-container-lifecycle-management">manually run and kill the container</a>.</p>
+</div>
 <h2 id="state-management">State management</h2>
 <p>Code execution within the same <code>client</code> context is stateful i.e. you can reference variables from previous executions. Code executions in different client contexts are isolated from each other:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
@@ -925,6 +947,15 @@
     <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Using API key: secret-key-123
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Debug mode enabled
 </span></code></pre></div></li>
+</ol>
+<h2 id="manual-container-lifecycle-management">Manual container lifecycle management</h2>
+<p>Instead of using <code>ExecutionContainer</code> as a context manager, you can also manually <code>run()</code> and <code>kill()</code> the container. This is useful for running the container on a separate host listening to a user-defined host port (e.g. <code>7777</code> in the example below).</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># do some work ...</span>
+</span></code></pre></div>
+<ol>
+<li>Create an <code>ExecutionContainer</code> instance using a fixed port.</li>
+<li>Run the container (detached).</li>
+<li>Cleanup.</li>
 </ol>
 
 
