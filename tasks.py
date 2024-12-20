@@ -19,3 +19,8 @@ def build_docs(c):
 @task
 def serve_docs(c):
     c.run("mkdocs serve -a 0.0.0.0:8000")
+
+
+@task
+def deploy_docs(c):
+    c.run("mkdocs gh-deploy --force")

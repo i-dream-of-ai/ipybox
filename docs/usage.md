@@ -23,6 +23,11 @@ For executing code in `ipybox` you first need to create a Docker container from 
 
 The default image used by `ExecutionContainer` is `gradion-ai/ipybox`. You can specify a custom image with the `tag` argument like in `ExecutionContainer(tag="my-box:v1")`, for example.
 
+!!! Note
+
+    Instead of letting the `ExecutionContainer` context manager handle the lifecycle of the container, you can also [manually run and kill the container](usage.md#manual-container-lifecycle-management).
+
+
 ## State management
 
 Code execution within the same `client` context is stateful i.e. you can reference variables from previous executions. Code executions in different client contexts are isolated from each other:
@@ -129,3 +134,19 @@ Environment variables can be set on the container for passing secrets or configu
     Using API key: secret-key-123
     Debug mode enabled
     ```
+
+## Manual container lifecycle management
+
+Instead of using `ExecutionContainer` as a context manager, you can also manually `run()` and `kill()` the container. This is useful for running the container on a separate host listening to a user-defined host port (e.g. `7777` in the example below).
+
+```python
+--8<-- "examples/08_manual_lifecycle.py:run-container"
+
+# do some work ...
+
+--8<-- "examples/08_manual_lifecycle.py:kill-container"
+```
+
+1. Create an `ExecutionContainer` instance using a fixed port.
+2. Run the container (detached).
+3. Cleanup.

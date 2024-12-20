@@ -19,6 +19,8 @@ class ExecutionContainer:
             Host paths may be relative or absolute. Container paths must be relative
             and are created as subdirectories of `/home/appuser` in the container.
         env: Environment variables to set in the container
+        port: Host port to map to the container's executor port. If not provided,
+            a random port will be allocated.
 
     Attributes:
         port: Host port mapped to the container's executor port. This port is dynamically
@@ -44,6 +46,7 @@ class ExecutionContainer:
         tag: str = DEFAULT_TAG,
         binds: dict[str, str] | None = None,
         env: dict[str, str] | None = None,
+        port: int | None = None,
     ):
         self.tag = tag
         self.binds = binds or {}
@@ -51,7 +54,7 @@ class ExecutionContainer:
 
         self._docker = None
         self._container = None
-        self._port: int | None = None
+        self._port = port
 
     async def __aenter__(self):
         await self.run()
@@ -65,7 +68,8 @@ class ExecutionContainer:
         """
         The host port mapped to the container's executor port.
 
-        This port is dynamically allocated when the container is started.
+        This port is dynamically allocated when the container is started unless
+        explicitly provided.
 
         Raises:
             RuntimeError: If the container is not running
@@ -92,11 +96,13 @@ class ExecutionContainer:
         self._container = await self._run()
 
     async def _run(self, executor_port: int = 8888):
+        host_port = {"HostPort": str(self._port)} if self._port else {}
+
         config = {
             "Image": self.tag,
             "HostConfig": {
                 "PortBindings": {
-                    f"{executor_port}/tcp": [{}]  # random host port
+                    f"{executor_port}/tcp": [host_port]  # random host port
                 },
                 "AutoRemove": True,
                 "Binds": await self._container_binds(),
@@ -109,7 +115,7 @@ class ExecutionContainer:
         await container.start()
 
         container_info = await container.show()
-        self._port = container_info["NetworkSettings"]["Ports"][f"{executor_port}/tcp"][0]["HostPort"]
+        self._port = int(container_info["NetworkSettings"]["Ports"][f"{executor_port}/tcp"][0]["HostPort"])
 
         return container
 
