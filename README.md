@@ -16,7 +16,9 @@
 - **Resource Management**: Manages container lifecycle with built-in timeout and resource control mechanisms.
 - **Reproducible Environments**: Provides a consistent execution setup across different systems to ensure reproducibility.
 
-This project is in early beta, with active development of new features ongoing.
+## Status
+
+Ipybox is in an early stage of development, with ongoing refinements and enhancements to its core features. Community feedback and contributions are greatly appreciated as ipybox continues to evolve.
 
 ## Documentation
 
