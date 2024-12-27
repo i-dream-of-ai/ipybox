@@ -1,6 +1,6 @@
 # ipybox
 
-`ipybox` is a lightweight, stateful and secure Python code execution sandbox built with [IPython](https://ipython.org/) and [Docker](https://www.docker.com/). Designed for AI agents that interact with their environment through code execution, it is also well-suited for general-purpose code execution. Fully open-source and free to use, ipybox is distributed under the Apache 2.0 license.
+`ipybox` is a lightweight, stateful and secure Python code execution sandbox built with [IPython](https://ipython.org/) and [Docker](https://www.docker.com/). Designed for AI agents that interact with their environment through code execution, it is also well-suited for general-purpose code execution. `ipybox` is fully open-source and free to use, distributed under the Apache 2.0 license.
 
 <p align="center">
   <img src="docs/img/logo.png" alt="logo">
@@ -8,17 +8,13 @@
 
 ## Features
 
-- **Secure Execution**: Executes code in isolated Docker containers, preventing unauthorized access to the host system.
-- **Stateful Execution**: Retains variable and session state across commands using IPython kernels.
-- **Real-Time Output Streaming**: Streams execution outputs directly, enabling real-time feedback.
-- **Enhanced Plotting Support**: Facilitates downloading plots created with Matplotlib and other libraries.
-- **Flexible Dependency Management**: Supports installing and updating dependencies during runtime or at build time.
-- **Resource Management**: Manages container lifecycle with built-in timeout and resource control mechanisms.
-- **Reproducible Environments**: Provides a consistent execution setup across different systems to ensure reproducibility.
-
-## Status
-
-Ipybox is in an early stage of development, with ongoing refinements and enhancements to its core features. Community feedback and contributions are greatly appreciated as ipybox continues to evolve.
+- **Secure Execution**: Executes code in isolated Docker containers, preventing unauthorized access to the host system
+- **Stateful Execution**: Maintains variable and session state across commands using IPython kernels
+- **Real-Time Output Streaming**: Provides immediate feedback through direct output streaming
+- **Enhanced Plotting Support**: Enables downloading of plots created with Matplotlib and other visualization libraries
+- **Flexible Dependency Management**: Supports package installation and updates during runtime or at build time
+- **Resource Management**: Controls container lifecycle with built-in timeout and resource management features
+- **Reproducible Environments**: Ensures consistent execution environments across different systems
 
 ## Documentation
 
@@ -76,6 +72,12 @@ Install dependencies with Poetry:
 
 ```bash
 poetry install --with docs
+```
+
+Install pre-commit hooks:
+
+```bash
+invoke precommit-install
 ```
 
 Run tests:
