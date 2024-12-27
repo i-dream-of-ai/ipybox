@@ -665,26 +665,26 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ipybox
 </span></code></pre></div>
 <h2 id="docker-image">Docker image</h2>
-<p>Before you can use <code>ipybox</code>, you need to build a Docker image. This image contains the required dependencies for executing Python code in stateful and isolated sessions.</p>
+<p>Before using <code>ipybox</code>, you need to build a Docker image. This image contains all required dependencies for executing Python code in stateful and isolated sessions.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Building an <code>ipybox</code> Docker image requires <a href="https://www.docker.com/">Docker</a> to be installed on your system. Containers created from that image will run with the same user and group IDs as the user who built the image, ensuring proper file permissions on mounted host directories.</p>
+<p>Building an <code>ipybox</code> Docker image requires <a href="https://www.docker.com/">Docker</a> to be installed on your system. Containers created from this image will run with the same user and group IDs as the user who built the image, ensuring proper file permissions on mounted host directories.</p>
 </div>
 <h3 id="default-build">Default build</h3>
-<p>To build an <code>ipybox</code> Docker image with default settings and no extra dependencies:</p>
+<p>To build an <code>ipybox</code> Docker image with default settings:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ipybox<span class="w"> </span>build
 </span></code></pre></div>
-<p>This creates a Docker image tagged as <code>gradion-ai/ipybox</code> with base Python dependencies required for the code execution environment.</p>
+<p>This creates a Docker image tagged as <code>gradion-ai/ipybox</code> containing the base Python dependencies required for the code execution environment.</p>
 <h3 id="custom-build">Custom build</h3>
-<p>To create a custom <code>ipybox</code> Docker image with additional dependencies for your application, create a dependencies file (e.g., <code>dependencies.txt</code>) following. For example:</p>
-<div class="language-text highlight"><span class="filename">dependencies.txt</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pandas = &quot;^2.2&quot;
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>scikit-learn = &quot;^1.5&quot;
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>matplotlib = &quot;^3.9&quot;
+<p>To create a custom <code>ipybox</code> Docker image with additional dependencies, create a dependencies file (e.g., <code>dependencies.txt</code>). For example:</p>
+<div class="language-toml highlight"><span class="filename">dependencies.txt</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pandas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2.2&quot;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">scikit-learn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.5&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">matplotlib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.9&quot;</span>
 </span></code></pre></div>
-<p>To build an image with custom tag and dependencies:</p>
+<p>Then build the image with a custom tag and dependencies:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ipybox<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-box:v1<span class="w"> </span>-d<span class="w"> </span>path/to/dependencies.txt
 </span></code></pre></div>
-<p>The dependencies file should list Python packages in <a href="https://python-poetry.org/docs/dependency-specification/">Poetry dependency specification format</a>. These will be installed in addition to the base dependencies required for the execution environment. The execution container also supports <a href="../usage/#installing-dependencies-at-runtime">installing dependencies at runtime</a>.</p>
+<p>The dependencies file should use the <a href="https://python-poetry.org/docs/dependency-specification/">Poetry dependency specification format</a>. These packages will be installed alongside the base dependencies required for the execution environment. You can also <a href="../usage/#installing-dependencies-at-runtime">install additional dependencies at runtime</a>.</p>
 
 
 
