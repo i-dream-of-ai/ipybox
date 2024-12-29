@@ -9,7 +9,7 @@ package-mode = false
 description = "Python code execution sandbox based on IPython and Docker"
 
 [tool.poetry.dependencies]
-python = "^3.10,<3.13"
+python = "^3.11,<3.14"
 ipykernel = "^6.29"
 jupyter-kernel-gateway = "^3.0"
 {dependencies}
