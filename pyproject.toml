@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "ipybox"
-version = "0.2.4"
+version = "0.2.5"
 description = "Python code execution sandbox based on IPython and Docker"
 homepage = "https://github.com/gradion-ai/ipybox"
 readme = "README.md"
@@ -22,7 +22,7 @@ aiodocker = "^0.23.0"
 aiofiles = "^24.1"
 aiohttp = "^3.10"
 pillow = "^11.0"
-python = "^3.10,<3.13"
+python = "^3.11,<3.14"
 tornado = "^6.4"
 typer = "^0.12.5"
 
