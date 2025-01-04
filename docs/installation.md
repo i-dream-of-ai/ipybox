@@ -8,10 +8,6 @@ pip install ipybox
 
 Before using `ipybox`, you need to build a Docker image. This image contains all required dependencies for executing Python code in stateful and isolated sessions.
 
-!!! note
-
-    Building an `ipybox` Docker image requires [Docker](https://www.docker.com/) to be installed on your system. Containers created from this image will run with the same user and group IDs as the user who built the image, ensuring proper file permissions on mounted host directories.
-
 ### Default build
 
 To build an `ipybox` Docker image with default settings:
@@ -21,6 +17,10 @@ python -m ipybox build
 ```
 
 This creates a Docker image tagged as `gradion-ai/ipybox` containing the base Python dependencies required for the code execution environment.
+
+!!! note
+
+    By default, containers created from this image will run with the same user and group IDs as the user who built the image, ensuring proper file permissions on mounted host directories. If you use the `-r` or `--root` option when building the image, the container will run as root.
 
 ### Custom build
 

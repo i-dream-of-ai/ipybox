@@ -25,7 +25,7 @@ The default image used by `ExecutionContainer` is `gradion-ai/ipybox`. You can s
 
 !!! Note
 
-    Instead of letting the `ExecutionContainer` context manager handle the lifecycle of the container, you can also [manually run and kill the container](usage.md#manual-container-lifecycle-management).
+    Instead of letting the `ExecutionContainer` context manager handle the lifecycle of the container, you can also [manually manage the container lifecycle](usage.md#manual-container-lifecycle-management).
 
 
 ## State management

@@ -34,6 +34,14 @@ def build(
             dir_okay=False,
         ),
     ] = Path(__file__).parent / "config" / "default" / "dependencies.txt",
+    root: Annotated[
+        bool,
+        typer.Option(
+            "--root",
+            "-r",
+            help="Run container as root",
+        ),
+    ] = False,
 ):
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
@@ -50,24 +58,35 @@ def build(
         ipybox_path = tmp_path / "ipybox"
         ipybox_path.mkdir()
 
+        if root:
+            dockerfile = "Dockerfile.root"
+            build_cmd_args = []
+        else:
+            dockerfile = "Dockerfile"
+            build_cmd_args = [
+                "--build-arg",
+                f"UID={os.getuid()}",
+                "--build-arg",
+                f"GID={os.getgid()}",
+            ]
+
         shutil.copy(pkg_path / "modinfo.py", tmp_path / "ipybox")
         shutil.copy(pkg_path / "config" / "default" / "environment.yml", tmp_path)
-        shutil.copy(pkg_path / "docker" / "Dockerfile", tmp_path)
+        shutil.copy(pkg_path / "docker" / dockerfile, tmp_path)
         shutil.copy(pkg_path / "scripts" / "server.sh", tmp_path)
 
         build_cmd = [
             "docker",
             "build",
+            "-f",
+            tmp_path / dockerfile,
             "-t",
             tag,
             str(tmp_path),
-            "--build-arg",
-            f"UID={os.getuid()}",
-            "--build-arg",
-            f"GID={os.getgid()}",
+            *build_cmd_args,
         ]
 
-        process = subprocess.Popen(build_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        process = subprocess.Popen(build_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)  # type: ignore
 
         while True:
             output = process.stdout.readline()  # type: ignore

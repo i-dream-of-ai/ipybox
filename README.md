@@ -18,7 +18,7 @@
 
 ## Documentation
 
-The official documentation is available [here](https://gradion-ai.github.io/ipybox/).
+The `ipybox` documentation is available [here](https://gradion-ai.github.io/ipybox/).
 
 ## Quickstart
 
@@ -28,20 +28,14 @@ Install `ipybox` Python package:
 pip install ipybox
 ```
 
-Build a `gradion-ai/ipybox` Docker image:
-
-```bash
-python -m ipybox build -t gradion-ai/ipybox
-```
-
-Print something inside `ipybox`:
+Execute Python code inside `ipybox`:
 
 ```python
 import asyncio
 from ipybox import ExecutionClient, ExecutionContainer
 
 async def main():
-    async with ExecutionContainer(tag="gradion-ai/ipybox") as container:
+    async with ExecutionContainer(tag="ghcr.io/gradion-ai/ipybox:minimal") as container:
         async with ExecutionClient(port=container.port) as client:
             result = await client.execute("print('Hello, world!')")
             print(f"Output: {result.text}")
@@ -51,37 +45,3 @@ if __name__ == "__main__":
 ```
 
 Find out more in the [user guide](https://gradion-ai.github.io/ipybox/).
-
-## Development
-
-Clone the repository:
-
-```bash
-git clone https://github.com/gradion-ai/ipybox.git
-cd ipybox
-```
-
-Create a new Conda environment and activate it:
-
-```bash
-conda env create -f environment.yml
-conda activate ipybox
-```
-
-Install dependencies with Poetry:
-
-```bash
-poetry install --with docs
-```
-
-Install pre-commit hooks:
-
-```bash
-invoke precommit-install
-```
-
-Run tests:
-
-```bash
-pytest -s tests
-```

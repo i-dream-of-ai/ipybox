@@ -18,16 +18,22 @@ async def workspace():
         yield temp_dir
 
 
-@pytest.fixture(scope="module")
-def executor_image() -> Generator[str, None, None]:
-    tag = f"{DEFAULT_TAG}-test"
+@pytest.fixture(
+    scope="module",
+    params=["test-root", "test"],
+)
+def executor_image(request) -> Generator[str, None, None]:
+    tag_suffix = request.param
+    tag = f"{DEFAULT_TAG}-{tag_suffix}"
     deps_path = Path(__file__).parent / "dependencies.txt"
 
+    cmd = ["python", "-m", "ipybox", "build", "-t", tag, "-d", str(deps_path)]
+
+    if tag_suffix == "test-root":
+        cmd.append("-r")
+
     # Build the image using the CLI
-    subprocess.run(
-        ["python", "-m", "ipybox", "build", "-t", tag, "-d", str(deps_path)],
-        check=True,
-    )
+    subprocess.run(cmd, check=True)
 
     yield tag
 

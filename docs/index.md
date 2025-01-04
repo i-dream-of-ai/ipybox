@@ -15,7 +15,3 @@
 - **Flexible Dependency Management**: Supports package installation and updates during runtime or at build time
 - **Resource Management**: Controls container lifecycle with built-in timeout and resource management features
 - **Reproducible Environments**: Ensures consistent execution environments across different systems
-
-## Status
-
-`ipybox` is in active early development, with ongoing refinements and enhancements to its core features. Community feedback and contributions are welcome as we continue to evolve the project.

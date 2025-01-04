@@ -1,3 +1,4 @@
+from collections import defaultdict
 from pathlib import Path
 
 from aiodocker import Docker
@@ -17,10 +18,11 @@ class ExecutionContainer:
         tag: Tag of the Docker image to use (defaults to gradion-ai/ipybox)
         binds: Mapping of host paths to container paths for volume mounting.
             Host paths may be relative or absolute. Container paths must be relative
-            and are created as subdirectories of `/home/appuser` in the container.
+            and are created as subdirectories of `/app` in the container.
         env: Environment variables to set in the container
         port: Host port to map to the container's executor port. If not provided,
             a random port will be allocated.
+        show_pull_progress: Whether to show progress when pulling the Docker image.
 
     Attributes:
         port: Host port mapped to the container's executor port. This port is dynamically
@@ -47,10 +49,12 @@ class ExecutionContainer:
         binds: dict[str, str] | None = None,
         env: dict[str, str] | None = None,
         port: int | None = None,
+        show_pull_progress: bool = True,
     ):
         self.tag = tag
         self.binds = binds or {}
         self.env = env or {}
+        self.show_pull_progress = show_pull_progress
 
         self._docker = None
         self._container = None
@@ -111,6 +115,9 @@ class ExecutionContainer:
             "ExposedPorts": {f"{executor_port}/tcp": {}},
         }
 
+        if not await self._local_image():
+            await self._pull_image()
+
         container = await self._docker.containers.create(config=config)  # type: ignore
         await container.start()
 
@@ -119,11 +126,50 @@ class ExecutionContainer:
 
         return container
 
+    async def _local_image(self) -> bool:
+        tag = self.tag if ":" in self.tag else f"{self.tag}:latest"
+
+        images = await self._docker.images.list()  # type: ignore
+        for img in images:
+            if "RepoTags" in img and tag in img["RepoTags"]:
+                return True
+
+        return False
+
+    async def _pull_image(self):
+        # Track progress by layer ID
+        layer_progress = defaultdict(str)
+
+        async for message in self._docker.images.pull(self.tag, stream=True):  # type: ignore
+            if not self.show_pull_progress:
+                continue
+
+            if "status" in message:
+                status = message["status"]
+                if "id" in message:
+                    layer_id = message["id"]
+                    if "progress" in message:
+                        layer_progress[layer_id] = f"{status}: {message['progress']}"
+                    else:
+                        layer_progress[layer_id] = status
+
+                    # Clear screen and move cursor to top
+                    print("\033[2J\033[H", end="")
+                    # Print all layer progress
+                    for layer_id, progress in layer_progress.items():
+                        print(f"{layer_id}: {progress}")
+                else:
+                    # Status without layer ID (like "Downloading" or "Complete")
+                    print(f"\r{status}", end="")
+
+        if self.show_pull_progress:
+            print()
+
     async def _container_binds(self) -> list[str]:
         container_binds = []
         for host_path, container_path in self.binds.items():
             host_path_resolved = await arun(self._prepare_host_path, host_path)
-            container_binds.append(f"{host_path_resolved}:/home/appuser/{container_path}")
+            container_binds.append(f"{host_path_resolved}:/app/{container_path}")
         return container_binds
 
     def _prepare_host_path(self, host_path: str) -> Path:
