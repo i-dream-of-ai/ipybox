@@ -764,7 +764,7 @@
 <p>The default image used by <code>ExecutionContainer</code> is <code>gradion-ai/ipybox</code>. You can specify a custom image with the <code>tag</code> argument like in <code>ExecutionContainer(tag="my-box:v1")</code>, for example.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Instead of letting the <code>ExecutionContainer</code> context manager handle the lifecycle of the container, you can also <a href="./#manual-container-lifecycle-management">manually run and kill the container</a>.</p>
+<p>Instead of letting the <code>ExecutionContainer</code> context manager handle the lifecycle of the container, you can also <a href="./#manual-container-lifecycle-management">manually manage the container lifecycle</a>.</p>
 </div>
 <h2 id="state-management">State management</h2>
 <p>Code execution within the same <code>client</code> context is stateful i.e. you can reference variables from previous executions. Code executions in different client contexts are isolated from each other:</p>
