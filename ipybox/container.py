@@ -1,7 +1,9 @@
+import asyncio
 from collections import defaultdict
 from pathlib import Path
 
 from aiodocker import Docker
+from aiodocker.containers import DockerContainer
 
 from ipybox.utils import arun
 
@@ -23,6 +25,7 @@ class ExecutionContainer:
         port: Host port to map to the container's executor port. If not provided,
             a random port will be allocated.
         show_pull_progress: Whether to show progress when pulling the Docker image.
+        metadata_timeout: Timeout for waiting for all required container metadata to be available.
 
     Attributes:
         port: Host port mapped to the container's executor port. This port is dynamically
@@ -50,6 +53,7 @@ class ExecutionContainer:
         env: dict[str, str] | None = None,
         port: int | None = None,
         show_pull_progress: bool = True,
+        metadata_timeout: float = 10,
     ):
         self.tag = tag
         self.binds = binds or {}
@@ -59,9 +63,15 @@ class ExecutionContainer:
         self._docker = None
         self._container = None
         self._port = port
+        self._metadata_timeout = metadata_timeout
+        self._executor_port = 8888
 
     async def __aenter__(self):
-        await self.run()
+        try:
+            await self.run()
+        except Exception as e:
+            await self.kill()
+            raise e
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -97,7 +107,8 @@ class ExecutionContainer:
         Create and start the Docker container.
         """
         self._docker = Docker()
-        self._container = await self._run()
+        self._container = await self._run(self._executor_port)
+        self._port = await self._get_port_from_metadata(self._container, self._executor_port, self._metadata_timeout)
 
     async def _run(self, executor_port: int = 8888):
         host_port = {"HostPort": str(self._port)} if self._port else {}
@@ -120,18 +131,29 @@ class ExecutionContainer:
 
         container = await self._docker.containers.create(config=config)  # type: ignore
         await container.start()
-
-        container_info = await container.show()
-        self._port = int(container_info["NetworkSettings"]["Ports"][f"{executor_port}/tcp"][0]["HostPort"])
-
         return container
+
+    async def _get_port_from_metadata(self, container: DockerContainer, executor_port: int, timeout: float):
+        executor_port_key = f"{executor_port}/tcp"
+
+        try:
+            async with asyncio.timeout(timeout):
+                while True:
+                    container_info = await container.show()
+                    mapped_ports = container_info["NetworkSettings"]["Ports"].get(executor_port_key)
+                    if mapped_ports and mapped_ports[0].get("HostPort"):
+                        return int(mapped_ports[0]["HostPort"])
+                    await asyncio.sleep(0.1)
+
+        except TimeoutError:
+            raise TimeoutError(f"Timed out waiting for container port mapping after {timeout} seconds")
 
     async def _local_image(self) -> bool:
         tag = self.tag if ":" in self.tag else f"{self.tag}:latest"
 
         images = await self._docker.images.list()  # type: ignore
         for img in images:
-            if "RepoTags" in img and tag in img["RepoTags"]:
+            if "RepoTags" in img and img["RepoTags"] is not None and tag in img["RepoTags"]:
                 return True
 
         return False
