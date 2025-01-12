@@ -24,8 +24,9 @@ class ExecutionContainer:
         env: Environment variables to set in the container
         port: Host port to map to the container's executor port. If not provided,
             a random port will be allocated.
+        port_allocation_timeout: Timeout in seconds waiting for the container's host
+            port to be allocated. This is only relevant on OSX when `port=None`.
         show_pull_progress: Whether to show progress when pulling the Docker image.
-        metadata_timeout: Timeout for waiting for all required container metadata to be available.
 
     Attributes:
         port: Host port mapped to the container's executor port. This port is dynamically
@@ -52,8 +53,8 @@ class ExecutionContainer:
         binds: dict[str, str] | None = None,
         env: dict[str, str] | None = None,
         port: int | None = None,
+        port_allocation_timeout: float = 10,
         show_pull_progress: bool = True,
-        metadata_timeout: float = 10,
     ):
         self.tag = tag
         self.binds = binds or {}
@@ -63,7 +64,7 @@ class ExecutionContainer:
         self._docker = None
         self._container = None
         self._port = port
-        self._metadata_timeout = metadata_timeout
+        self._port_allocation_timeout = port_allocation_timeout
         self._executor_port = 8888
 
     async def __aenter__(self):
@@ -108,22 +109,20 @@ class ExecutionContainer:
         """
         self._docker = Docker()
         self._container = await self._run(self._executor_port)
-        self._port = await self._get_port_from_metadata(self._container, self._executor_port, self._metadata_timeout)
 
     async def _run(self, executor_port: int = 8888):
         host_port = {"HostPort": str(self._port)} if self._port else {}
+        executor_port_key = f"{executor_port}/tcp"
 
         config = {
             "Image": self.tag,
             "HostConfig": {
-                "PortBindings": {
-                    f"{executor_port}/tcp": [host_port]  # random host port
-                },
+                "PortBindings": {executor_port_key: [host_port]},
                 "AutoRemove": True,
                 "Binds": await self._container_binds(),
             },
             "Env": self._container_env(),
-            "ExposedPorts": {f"{executor_port}/tcp": {}},
+            "ExposedPorts": {executor_port_key: {}},
         }
 
         if not await self._local_image():
@@ -131,22 +130,24 @@ class ExecutionContainer:
 
         container = await self._docker.containers.create(config=config)  # type: ignore
         await container.start()
+
+        self._port = await self._host_port(container, executor_port_key)
         return container
 
-    async def _get_port_from_metadata(self, container: DockerContainer, executor_port: int, timeout: float):
-        executor_port_key = f"{executor_port}/tcp"
-
+    async def _host_port(self, container: DockerContainer, executor_port_key: str) -> int:
         try:
-            async with asyncio.timeout(timeout):
+            async with asyncio.timeout(self._port_allocation_timeout):
                 while True:
                     container_info = await container.show()
-                    mapped_ports = container_info["NetworkSettings"]["Ports"].get(executor_port_key)
-                    if mapped_ports and mapped_ports[0].get("HostPort"):
-                        return int(mapped_ports[0]["HostPort"])
+                    host_ports = container_info["NetworkSettings"]["Ports"].get(executor_port_key)
+                    if host_ports and host_ports[0].get("HostPort"):
+                        return int(host_ports[0]["HostPort"])
                     await asyncio.sleep(0.1)
 
         except TimeoutError:
-            raise TimeoutError(f"Timed out waiting for container port mapping after {timeout} seconds")
+            raise TimeoutError(
+                f"Timed out waiting for host port allocation after {self._port_allocation_timeout} seconds"
+            )
 
     async def _local_image(self) -> bool:
         tag = self.tag if ":" in self.tag else f"{self.tag}:latest"
