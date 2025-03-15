@@ -108,7 +108,7 @@ class ExecutionContainer:
         Create and start the Docker container.
         """
         self._docker = Docker()
-        self._container = await self._run(self._executor_port)
+        await self._run(self._executor_port)
 
     async def _run(self, executor_port: int = 8888):
         host_port = {"HostPort": str(self._port)} if self._port else {}
@@ -131,7 +131,9 @@ class ExecutionContainer:
         container = await self._docker.containers.create(config=config)  # type: ignore
         await container.start()
 
+        self._container = container
         self._port = await self._host_port(container, executor_port_key)
+
         return container
 
     async def _host_port(self, container: DockerContainer, executor_port_key: str) -> int:
