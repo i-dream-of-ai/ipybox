@@ -518,6 +518,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-a-remote-docker_host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a remote DOCKER_HOST
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -716,6 +725,15 @@
   <a href="#manual-container-lifecycle-management" class="md-nav__link">
     <span class="md-ellipsis">
       Manual container lifecycle management
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-remote-docker_host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a remote DOCKER_HOST
     </span>
   </a>
   
@@ -949,7 +967,8 @@
 </span></code></pre></div></li>
 </ol>
 <h2 id="manual-container-lifecycle-management">Manual container lifecycle management</h2>
-<p>Instead of using <code>ExecutionContainer</code> as a context manager, you can also manually <code>run()</code> and <code>kill()</code> the container. This is useful for running the container on a separate host listening to a user-defined host port (e.g. <code>7777</code> in the example below).</p>
+<p>Instead of using <code>ExecutionContainer</code> as a context manager, you can also manually <code>run()</code> and <code>kill()</code> the container. Setting a user-defined port (e.g. <code>7777</code> in the example below) is optional.</p>
+<p>This is useful for running the container on a separate host listening to a user-defined host port (e.g. <code>7777</code> in the example below).</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">container</span> <span class="o">=</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">7777</span><span class="p">)</span>  <span class="c1"># (1)!</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">await</span> <span class="n">container</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  <span class="c1"># (2)!</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">assert</span> <span class="n">container</span><span class="o">.</span><span class="n">port</span> <span class="o">==</span> <span class="mi">7777</span>
@@ -962,6 +981,22 @@
 <li>Create an <code>ExecutionContainer</code> instance using a fixed port.</li>
 <li>Run the container (detached).</li>
 <li>Cleanup.</li>
+</ol>
+<h2 id="using-a-remote-docker_host">Using a remote <code>DOCKER_HOST</code></h2>
+<p>If you want to run the execution container on a remote host but want to manage the container locally, you can set the <code>DOCKER_HOST</code> <a href="https://docs.docker.com/reference/cli/docker/#environment-variables">environment variable</a> to the remote host. The following example assumes that the remote Docker daemon has been configured to accept <code>tcp</code> connections at port <code>2375</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;192.168.94.50&quot;</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DOCKER_HOST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tcp://</span><span class="si">{</span><span class="n">HOST</span><span class="si">}</span><span class="s2">:2375&quot;</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;ghcr.io/gradion-ai/ipybox:minimal&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">HOST</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;17 ** 0.13&quot;</span><span class="p">)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ol>
+<li>Example IP address of the remote Docker host</li>
+<li>Remote Docker daemon is accessible via <code>tcp</code> at port <code>2375</code></li>
+<li>Creates a container on the remote host</li>
+<li>Create an IPython kernel in the remote container</li>
 </ol>
 
 
