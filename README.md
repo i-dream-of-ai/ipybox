@@ -17,17 +17,16 @@
 
 ## Features
 
-- **Secure Execution**: Executes code in isolated Docker containers, preventing unauthorized access to the host system
-- **Stateful Execution**: Maintains variable and session state across commands using IPython kernels
-- **Real-Time Output Streaming**: Provides immediate feedback through direct output streaming
-- **Enhanced Plotting Support**: Enables downloading of plots created with Matplotlib and other visualization libraries
-- **Flexible Dependency Management**: Supports package installation and updates during runtime or at build time
-- **Resource Management**: Controls container lifecycle with built-in timeout and resource management features
+- **Secure Execution**: Executes code in Docker container locally or remotely
+- **Stateful Execution**: Maintains state across code executions using IPython kernels
+- **Output Streaming**: Provides immediate feedback through direct output streaming
+- **Plotting Support**: Enables downloading of plots created with visualization libraries
+- **MCP Support**: Generate Python functions from MCP tools and use them during code execution
+- **Dependency Management**: Supports package installation during runtime or at build time
+- **Resource Management**: Context manager based container and IPython kernel lifecycle management
 - **Reproducible Environments**: Ensures consistent execution environments across different systems
 
-## Documentation
-
-The `ipybox` documentation is available [here](https://gradion-ai.github.io/ipybox/).
+Find out more in the [user guide](https://gradion-ai.github.io/ipybox/).
 
 ## Quickstart
 
@@ -45,7 +44,7 @@ from ipybox import ExecutionClient, ExecutionContainer
 
 async def main():
     async with ExecutionContainer(tag="ghcr.io/gradion-ai/ipybox:minimal") as container:
-        async with ExecutionClient(port=container.port) as client:
+        async with ExecutionClient(port=container.executor_port) as client:
             result = await client.execute("print('Hello, world!')")
             print(f"Output: {result.text}")
 
@@ -53,4 +52,64 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Find out more in the [user guide](https://gradion-ai.github.io/ipybox/).
+## MCP Support
+
+`ipybox` also supports the generation of Python functions from MCP tools. When called, they execute the corresponding tools on the MCP server.
+
+```python
+import asyncio
+
+from ipybox import ExecutionClient, ExecutionContainer, ResourceClient
+
+
+async def main():
+    server_params = {
+        "command": "uvx",
+        "args": ["mcp-server-fetch"],
+    }
+
+    async with ExecutionContainer(tag="ghcr.io/gradion-ai/ipybox:minimal") as container:
+        async with ResourceClient(port=container.resource_port) as client:
+            # generate Python functions from MCP server metadata
+            generate_result = await client.generate_mcp_sources(
+                relpath="mcpgen",
+                server_name="fetchurl",
+                server_params=server_params,
+            )
+            # tool names provided by MCP server
+            assert generate_result == ["fetch"]
+
+            # retrieve generated sources if needed
+            generated_sources = await client.get_mcp_sources(
+                relpath="mcpgen",
+                server_name="fetchurl",
+            )
+            assert "def fetch(params: Params) -> str:" in generated_sources["fetch"]
+
+        async with ExecutionClient(port=container.executor_port) as client:
+            # call the generated function in the container
+            result = await client.execute("""
+                from mcpgen.fetchurl.fetch import Params, fetch
+                print(fetch(Params(url="https://www.gradion.ai")))
+            """)
+            print(result.text[:375])
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+The script executes the [generated `fetch` function](docs/mcpgen/fetchurl/) in the `ipybox` container and then prints the first 375 characters of the fetched content:
+
+````
+Contents of https://www.gradion.ai/:
+```
+
+                         ___                    _
+   ____ __________ _____/ (_)___  ____   ____ _(_)
+  / __ `/ ___/ __ `/ __  / / __ \/ __ \ / __ `/ /
+ / /_/ / /  / /_/ / /_/ / / /_/ / / / // /_/ / /
+ \__, /_/   \__,_/\__,_/_/\____/_/ /_(_)__,_/_/
+/____/
+```
+````
