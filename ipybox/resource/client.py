@@ -5,12 +5,24 @@ import aiohttp
 
 
 class ConnectionError(Exception):
-    """Exception raised when connection to the resource server fails."""
-
-    pass
+    """Raised when a connection to a resource server cannot be established."""
 
 
 class ResourceClient:
+    """Context manager for
+
+    - loading the source code of Python modules and generated MCP client functions
+      from an [`ExecutionContainer`][ipybox.container.ExecutionContainer].
+    - generating Python client functions from MCP server tool metadata and storing
+      the generated sources in an [`ExecutionContainer`][ipybox.container.ExecutionContainer].
+
+    Args:
+        port: Host port for the container's resource port
+        host: Hostname or IP address of the container's host
+        connect_retries: Number of connection retries.
+        connect_retry_interval: Delay between connection retries in seconds.
+    """
+
     def __init__(
         self,
         port: int,
@@ -51,20 +63,22 @@ class ResourceClient:
             raise ConnectionError("Failed to connect to resource server")
 
     async def generate_mcp_sources(self, relpath: str, server_name: str, server_params: dict[str, Any]) -> list[str]:
-        """Generate MCP client code from MCP `server_params`.
+        """Generate Python client functions for tools provided by an MCP server.
 
-        The generated code will be stored in `/app/{relpath}/{server_name}/{tool_name}.py`
-        in the container for each tool provided by the server.
+        One MCP client function is generated per MCP tool from its metadata. The generated function is stored in a
+        module named `/app/{relpath}/{server_name}/{tool_name}.py`. Importing this module and calling the function
+        invokes the corresponding MCP tool. This works for both `stdio` and `sse` based MCP servers. `stdio` based
+        MCP servers are executed inside the container, `sse` based MCP servers are expected to run elsewhere.
 
         Args:
             relpath: Path relative to the container's `/app` directory.
-            server_name: An application-defined name for the MCP server.
-            server_params: MCP server paramaters. A `stdio` based MCP server requires
-                a `command` key, an `sse` based MCP server requires a `url` key.
+            server_name: An application-defined name for the MCP server. Must be a valid Python module name.
+            server_params: MCP server configuration. `stdio` server configurations must specify at least a `command`
+                key, `sse` server configurations must specify at least a `url` key.
 
         Returns:
-            List of (sanitized) tool names. Tool names are sanitized to
-                ensure they can be used as Python module names.
+            List of tool names provided by the MCP server. Tool names are sanitized to ensure they
+                can be used as Python module names.
         """
         url = f"{self._base_url}/mcp/{relpath}/{server_name}"
         async with self._session.put(url, json=server_params) as response:
@@ -72,14 +86,14 @@ class ResourceClient:
             return await response.json()
 
     async def get_mcp_sources(self, relpath: str, server_name: str) -> dict[str, str]:
-        """Get generated MCP client code for a given MCP server.
+        """Get the source code of generated MCP client functions for given MCP `server_name`.
 
         Args:
-            relpath: Path relative to the container's `/app` directory.
-            server_name: An application-defined name for the MCP server.
+            relpath: Path relative to the container's `/app` directory
+            server_name: Application-defined name of an MCP server
 
         Returns:
-            Dictionary of tool names and their corresponding source code.
+            Source code of generated MCP client functions. Keys are tool names, values are generated sources.
         """
         url = f"{self._base_url}/mcp/{relpath}"
         async with self._session.get(url, params={"server_name": server_name}) as response:
@@ -87,13 +101,13 @@ class ResourceClient:
             return await response.json()
 
     async def get_module_sources(self, module_names: list[str]) -> dict[str, str]:
-        """Get source code for Python modules.
+        """Get the source code of Python modules on the container's Python path.
 
         Args:
-            module_names: List of module names to get source code for.
+            module_names: A list of Python module names.
 
         Returns:
-            Dictionary of module names and their corresponding source code.
+            Source code of Python modules. Keys are module names, values are module sources.
         """
         url = f"{self._base_url}/modules"
         async with self._session.get(url, params={"q": module_names}) as response:

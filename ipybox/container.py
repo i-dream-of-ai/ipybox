@@ -11,38 +11,27 @@ DEFAULT_TAG = "gradion-ai/ipybox"
 
 
 class ExecutionContainer:
-    """
-    A context manager for managing the lifecycle of a Docker container used for code execution.
+    """Context manager for the lifecycle of a code execution Docker container. A code execution container
+    provides:
 
-    It handles the creation, port mapping, volume binding, and cleanup of the container.
+    - a [Jupyter Kernel Gateway](https://jupyter-kernel-gateway.readthedocs.io/) for stateful code execution
+      in [IPython kernels](https://ipython.readthedocs.io/). Clients connect to it via
+      [`ExecutionClient`][ipybox.executor.ExecutionClient] on the container's
+      [executor host port][ipybox.container.ExecutionContainer.executor_port].
+    - a *resource server* for downloading Python module sources and registering MCP servers.
+      Clients connect to it via [`ResourceClient`][ipybox.resource.client.ResourceClient] on
+      the container's [resource host port][ipybox.container.ExecutionContainer.resource_port].
 
     Args:
-        tag: Tag of the Docker image to use (defaults to gradion-ai/ipybox)
-        binds: Mapping of host paths to container paths for volume mounting.
+        tag: Name and optionally tag of the `ipybox` Docker image to use (format: `name:tag`)
+        binds: A dictionary mapping host paths to container paths for bind mounts.
             Host paths may be relative or absolute. Container paths must be relative
             and are created as subdirectories of `/app` in the container.
         env: Environment variables to set in the container
-        executor_port: Host port for the container's executor port. If not provided,
-            a random port will be allocated.
-        resource_port: Host port for the container's resource port. If not provided,
-            a random port will be allocated.
-        port_allocation_timeout: Timeout in seconds waiting for the container's host
-            port to be allocated. This is only relevant on OSX when `port=None`.
+        executor_port: Host port for the container's executor port. A random port is allocated if not specified.
+        resource_port: Host port for the container's resource port. A random port is allocated if not specified.
+        port_allocation_timeout: Maximum time in seconds to wait for port random allocation.
         show_pull_progress: Whether to show progress when pulling the Docker image.
-
-    Example:
-        ```python
-        from ipybox import ExecutionClient, ExecutionContainer
-
-        binds = {"/host/path": "example/path"}
-        env = {"API_KEY": "secret"}
-
-        async with ExecutionContainer(binds=binds, env=env) as container:
-            async with ExecutionClient(host="localhost", port=container.executor_port) as client:
-                result = await client.execute("print('Hello, world!')")
-                print(result.text)
-        ```
-        > Hello, world!
     """
 
     def __init__(
@@ -79,14 +68,12 @@ class ExecutionContainer:
 
     @property
     def executor_port(self) -> int:
-        """
-        The host port for the container's executor port.
-
-        This port is dynamically allocated when the container is started unless
-        explicitly provided.
+        """The host port of the container's executor port. Either an application-defined
+        `executor_port` via the constructor or a dynamically allocated random port.
 
         Raises:
-            RuntimeError: If the container is not running
+            RuntimeError: If the container is not running and an application-defined
+                port was not provided.
         """
         if self._executor_port is None:
             raise RuntimeError("Container not running")
@@ -94,23 +81,19 @@ class ExecutionContainer:
 
     @property
     def resource_port(self) -> int:
-        """
-        The host port for the container's resource port.
-
-        This port is dynamically allocated when the container is started unless
-        explicitly provided.
+        """The host port of the container's resource port. Either an application-defined
+        `resource_port` via the constructor or a dynamically allocated random port.
 
         Raises:
-            RuntimeError: If the container is not running
+            RuntimeError: If the container is not running and an application-defined
+                port was not provided.
         """
         if self._resource_port is None:
             raise RuntimeError("Container not running")
         return self._resource_port
 
     async def kill(self):
-        """
-        Kill and remove the Docker container.
-        """
+        """Kills and removes the current code execution Docker container."""
         if self._container:
             await self._container.kill()
 
@@ -118,9 +101,7 @@ class ExecutionContainer:
             await self._docker.close()
 
     async def run(self):
-        """
-        Create and start the Docker container.
-        """
+        """Creates and starts a code execution Docker container."""
         self._docker = Docker()
         await self._run()
 

@@ -18,17 +18,15 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionError(Exception):
-    """Exception raised when connection to an IPython kernel fails."""
-
-    pass
+    """Raised when a connection to an IPython kernel cannot be established."""
 
 
 class ExecutionError(Exception):
-    """Exception raised when code execution in the IPython kernel fails.
+    """Raised when code execution in an IPython kernel raises an error.
 
     Args:
         message: Error message
-        trace: Stack trace string representation
+        trace: String representation of the stack trace.
     """
 
     def __init__(self, message: str, trace: str | None = None):
@@ -38,7 +36,7 @@ class ExecutionError(Exception):
 
 @dataclass
 class ExecutionResult:
-    """The result of a code execution.
+    """The result of a successful code execution.
 
     Args:
         text: Output text generated during execution
@@ -53,8 +51,8 @@ class Execution:
     """A code execution in an IPython kernel.
 
     Args:
-        client: The client instance that created this execution
-        req_id: Unique identifier for the execution request
+        client: The client that initiated this code execution
+        req_id: Unique identifier of the code execution request
     """
 
     def __init__(self, client: "ExecutionClient", req_id: str):
@@ -67,18 +65,15 @@ class Execution:
         self._stream_consumed: bool = False
 
     async def result(self, timeout: float = 120) -> ExecutionResult:
-        """Waits for execution to complete and returns the final result.
-
-        If a timeout is reached, the kernel is interrupted.
+        """Retrieves the complete result of this code execution. Waits until the
+        result is available.
 
         Args:
-            timeout: Maximum time to wait in seconds. Defaults to 120.
-
-        Returns:
-            ExecutionResult object
+            timeout: Maximum time in seconds to wait for the execution result
 
         Raises:
-            asyncio.TimeoutError: If execution exceeds timeout duration
+            ExecutionError: If code execution raises an error
+            asyncio.TimeoutError: If code execution duration exceeds the specified timeout
         """
         if not self._stream_consumed:
             async for _ in self.stream(timeout=timeout):
@@ -90,16 +85,19 @@ class Execution:
         )
 
     async def stream(self, timeout: float = 120) -> AsyncIterator[str]:
-        """Streams the execution output text as it becomes available.
+        """Streams the code execution result as it is generated. Once the stream
+        is consumed, a [`result`][ipybox.executor.Execution.result] is immediately
+        available without waiting.
+
+        Generated images are not streamed. They can be obtained from the
+        return value of [`result`][ipybox.executor.Execution.result].
 
         Args:
-            timeout: Maximum time to wait in seconds. Defaults to 120.
-
-        Yields:
-            Output text chunks as they arrive
+            timeout: Maximum time in seconds to wait for the complete execution result
 
         Raises:
-            asyncio.TimeoutError: If execution exceeds timeout duration
+            ExecutionError: If code execution raises an error
+            asyncio.TimeoutError: If code execution duration exceeds the specified timeout
         """
         try:
             async with asyncio.timeout(timeout):
@@ -152,26 +150,20 @@ class Execution:
 
 
 class ExecutionClient:
-    """A context manager for executing code in an IPython kernel.
+    """
+    Context manager for executing code in an IPython kernel running in an
+    [`ExecutionContainer`][ipybox.container.ExecutionContainer].
+    The kernel is created on entering the context and destroyed on exit.
+    The container's `/app` directory is added to the kernel's Python path.
+
+    Code execution is stateful for a given `ExecutionClient` instance. Definitions and
+    variables of previous executions are available to subsequent executions.
 
     Args:
-        host: Hostname where the code execution container is running
         port: Host port for the container's executor port
-        heartbeat_interval: Interval in seconds between heartbeat pings. Defaults to 10.
-
-    Example:
-        ```python
-        from ipybox import ExecutionClient, ExecutionContainer
-
-        binds = {"/host/path": "example/path"}
-        env = {"API_KEY": "secret"}
-
-        async with ExecutionContainer(binds=binds, env=env) as container:
-            async with ExecutionClient(host="localhost", port=container.executor_port) as client:
-                result = await client.execute("print('Hello, world!')")
-                print(result.text)
-        ```
-        > Hello, world!
+        host: Hostname or IP address of the container's host
+        heartbeat_interval: Ping interval for keeping the websocket connection to
+            the IPython kernel alive.
     """
 
     def __init__(self, port: int, host: str = "localhost", heartbeat_interval: float = 10):
@@ -215,11 +207,11 @@ class ExecutionClient:
         return f"ws://{self.host}:{self.port}/api/kernels/{self.kernel_id}/channels"
 
     async def connect(self, retries: int = 10, retry_interval: float = 1.0):
-        """Creates and connects to an IPython kernel.
+        """Creates an IPython kernel and connects to it.
 
         Args:
-            retries: Number of connection attempts. Defaults to 10.
-            retry_interval: Delay between retries in seconds. Defaults to 1.0.
+            retries: Number of connection retries.
+            retry_interval: Delay between connection retries in seconds.
 
         Raises:
             ConnectionError: If connection cannot be established after all retries
@@ -243,7 +235,7 @@ class ExecutionClient:
         await self._init_kernel()
 
     async def disconnect(self):
-        """Closes the connection to the kernel and cleans up resources."""
+        """Disconnects from and deletes the running IPython kernel."""
         self.heartbeat_callback.stop()
         self._ws.close()
         async with aiohttp.ClientSession() as session:
@@ -251,30 +243,28 @@ class ExecutionClient:
                 pass
 
     async def execute(self, code: str, timeout: float = 120) -> ExecutionResult:
-        """Executes code and returns the result.
+        """Executes code in this client's IPython kernel and returns the result.
 
         Args:
             code: Code to execute
-            timeout: Maximum execution time in seconds. Defaults to 120.
-
-        Returns:
-            ExecutionResult object
+            timeout: Maximum time in seconds to wait for the execution result
 
         Raises:
-            ExecutionError: If code execution raised an error
-            asyncio.TimeoutError: If execution exceeds timeout duration
+            ExecutionError: If code execution raises an error
+            asyncio.TimeoutError: If code execution duration exceeds the specified timeout
         """
         execution = await self.submit(code)
         return await execution.result(timeout=timeout)
 
     async def submit(self, code: str) -> Execution:
-        """Submits code for execution and returns an Execution object to track it.
+        """Submits code for execution in this client's IPython kernel and returns an
+        [`Execution`][ipybox.executor.Execution] object for consuming the execution result.
 
         Args:
             code: Python code to execute
 
         Returns:
-            An Execution object to track the code execution
+            A [`Execution`][ipybox.executor.Execution] object to track the code execution.
         """
         req_id = uuid4().hex
         req = {

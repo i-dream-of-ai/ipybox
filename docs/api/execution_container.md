@@ -1,2 +1,7 @@
 
-::: ipybox.container.ExecutionContainer
+::: ipybox.container
+    options:
+      show_root_heading: false
+      show_root_toc_entry: false
+      members:
+        - ExecutionContainer
