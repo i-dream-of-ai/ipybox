@@ -11,14 +11,14 @@
       
       
       
-        <link rel="prev" href="../installation/">
+        <link rel="prev" href="../docker/">
       
       
         <link rel="next" href="../api/execution_container/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -374,7 +374,30 @@
   
   
   <span class="md-ellipsis">
-    Overview
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quickstart
     
   </span>
   
@@ -398,6 +421,29 @@
   
   <span class="md-ellipsis">
     Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker
     
   </span>
   
@@ -474,45 +520,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#state-management" class="md-nav__link">
+  <a href="#stateful-code-execution" class="md-nav__link">
     <span class="md-ellipsis">
-      State management
+      Stateful code execution
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#output-streaming" class="md-nav__link">
+  <a href="#execution-output-streaming" class="md-nav__link">
     <span class="md-ellipsis">
-      Output streaming
+      Execution output streaming
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-dependencies-at-runtime" class="md-nav__link">
+  <a href="#install-packages-at-runtime" class="md-nav__link">
     <span class="md-ellipsis">
-      Installing dependencies at runtime
+      Install packages at runtime
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-and-returning-plots" class="md-nav__link">
+  <a href="#generate-plots" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating and returning plots
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bind-mounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bind mounts
+      Generate plots
     </span>
   </a>
   
@@ -528,27 +565,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manual-container-lifecycle-management" class="md-nav__link">
+  <a href="#remote-docker_host" class="md-nav__link">
     <span class="md-ellipsis">
-      Manual container lifecycle management
+      Remote DOCKER_HOST
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-a-remote-docker_host" class="md-nav__link">
+  <a href="#mcp-integration" class="md-nav__link">
     <span class="md-ellipsis">
-      Using a remote DOCKER_HOST
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-mcp-servers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using MCP servers
+      MCP integration
     </span>
   </a>
   
@@ -725,45 +753,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#state-management" class="md-nav__link">
+  <a href="#stateful-code-execution" class="md-nav__link">
     <span class="md-ellipsis">
-      State management
+      Stateful code execution
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#output-streaming" class="md-nav__link">
+  <a href="#execution-output-streaming" class="md-nav__link">
     <span class="md-ellipsis">
-      Output streaming
+      Execution output streaming
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#installing-dependencies-at-runtime" class="md-nav__link">
+  <a href="#install-packages-at-runtime" class="md-nav__link">
     <span class="md-ellipsis">
-      Installing dependencies at runtime
+      Install packages at runtime
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#creating-and-returning-plots" class="md-nav__link">
+  <a href="#generate-plots" class="md-nav__link">
     <span class="md-ellipsis">
-      Creating and returning plots
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bind-mounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bind mounts
+      Generate plots
     </span>
   </a>
   
@@ -779,27 +798,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manual-container-lifecycle-management" class="md-nav__link">
+  <a href="#remote-docker_host" class="md-nav__link">
     <span class="md-ellipsis">
-      Manual container lifecycle management
+      Remote DOCKER_HOST
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-a-remote-docker_host" class="md-nav__link">
+  <a href="#mcp-integration" class="md-nav__link">
     <span class="md-ellipsis">
-      Using a remote DOCKER_HOST
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-mcp-servers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using MCP servers
+      MCP integration
     </span>
   </a>
   
@@ -825,232 +835,200 @@
 
 
 <h1 id="usage">Usage</h1>
-<p>The two main classes of the <code>ipybox</code> package are <a href="../api/execution_container/"><code>ExecutionContainer</code></a> and <a href="../api/execution_client/"><code>ExecutionClient</code></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Runnable scripts of the source code on this page are available in the <a href="https://github.com/gradion-ai/ipybox/tree/main/examples">examples</a> directory.</p>
+<p>Code examples in the following sections are from the project's <a href="https://github.com/gradion-ai/ipybox/tree/main/examples">examples</a> directory. They use a <a href="../docker/#default-image">default</a> <code>gradion-ai/ipybox</code> Docker image that you need to build yourself with</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ipybox<span class="w"> </span>build
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Alternatively, you can also use one of the <a href="https://gradion-ai.github.io/freeact/environment/#prebuilt-docker-images">prebuilt</a> Docker images, as done in <a href="../quickstart/">quickstart</a>, for example.</p>
 </div>
 <h2 id="basic-usage">Basic usage</h2>
-<p>For executing code in <code>ipybox</code> you first need to create a Docker container from an <code>ipybox</code> <a href="../installation/#docker-image">Docker image</a> and then an IPython kernel running in that container. This is done with the <code>ExecutionContainer</code> and the <code>ExecutionClient</code> context managers.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ipybox</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionClient</span><span class="p">,</span> <span class="n">ExecutionContainer</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;gradion-ai/ipybox&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;print(&#39;Hello, world!&#39;)&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+<p>Use the <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer"><code>ExecutionContainer</code></a> context manager to create a container from an <code>ipybox</code> Docker image. The container is created on entering the context manager and removed on exit.
+Use the <a class="autorefs autorefs-internal" href="../api/execution_client/#ipybox.executor.ExecutionClient"><code>ExecutionClient</code></a> context manager to manage the lifecycle of an IPython kernel within the container. A kernel is created on entering the context manager and removed on exit.
+Call <a class="autorefs autorefs-internal" href="../api/execution_client/#ipybox.executor.ExecutionClient.execute"><code>execute</code></a> on an <code>ExecutionClient</code> instance to execute code in its kernel.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ipybox</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionClient</span><span class="p">,</span> <span class="n">ExecutionContainer</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;gradion-ai/ipybox&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;print(&#39;Hello, world!&#39;)&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
 </span></code></pre></div>
 <ol>
-<li>Create and start a container for code execution</li>
-<li>Create and connect to an IPython kernel</li>
+<li>Create and start a code execution container</li>
+<li>Create an IPython kernel in the container</li>
 <li>Execute Python code and await the result</li>
-<li>Output: <code>Hello, world!</code></li>
+<li>Prints: <code>Output: Hello, world!</code></li>
 </ol>
-<p>The default image used by <code>ExecutionContainer</code> is <code>gradion-ai/ipybox</code>. You can specify a custom image with the <code>tag</code> argument like in <code>ExecutionContainer(tag="my-box:v1")</code>, for example.</p>
+<p>The <a class="autorefs autorefs-internal" href="../api/execution_client/#ipybox.executor.ExecutionClient.execute"><code>execute</code></a> method accepts an optional <code>timeout</code> argument (defaults to <code>120</code> seconds). On timeout, the execution is terminated by interrupting the kernel and a <code>TimeoutError</code> is raised.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Instead of using the <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer"><code>ExecutionContainer</code></a> context manager for lifecycle management, you can also manually <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer.run"><code>run</code></a> and <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer.kill"><code>kill</code></a> a container.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">container</span> <span class="o">=</span> <span class="n">ExecutionContainer</span><span class="p">()</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">await</span> <span class="n">container</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># do some work ...</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">await</span> <span class="n">container</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>  <span class="c1"># (3)!</span>
+</span></code></pre></div>
+<ol>
+<li>Create an <code>ExecutionContainer</code> instance.</li>
+<li>Run the container (detached).</li>
+<li>Kill the container.</li>
+</ol>
+</div>
+<h2 id="stateful-code-execution">Stateful code execution</h2>
+<p>Code executions with the same <a class="autorefs autorefs-internal" href="../api/execution_client/#ipybox.executor.ExecutionClient"><code>ExecutionClient</code></a> instance are stateful. Definitions and variables from previous executions can be used in later executions. Code executions with different <code>ExecutionClient</code> instances run in different kernels and do not share in-memory state.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client_1</span><span class="p">:</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client_1</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;x = 1&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client_1</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;print(x)&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client_2</span><span class="p">:</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>            <span class="k">await</span> <span class="n">client_2</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;print(x)&quot;</span><span class="p">)</span>  <span class="c1"># (5)!</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="k">except</span> <span class="n">ExecutionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>            <span class="k">assert</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;NameError: name &#39;x&#39; is not defined&quot;</span>
+</span></code></pre></div>
+<ol>
+<li>First client instance</li>
+<li>Execute code that defines variable <code>x</code></li>
+<li>Use variable <code>x</code> defined in previous execution</li>
+<li>Second client instance</li>
+<li>Variable <code>x</code> is not defined in <code>client_2</code>'s kernel</li>
+</ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Instead of letting the <code>ExecutionContainer</code> context manager handle the lifecycle of the container, you can also <a href="./#manual-container-lifecycle-management">manually manage the container lifecycle</a>.</p>
+<p>While kernels in the same container don't share in-memory state, they can still exchange data by reading and writing files to the shared container filesystem.
+For full isolation of code executions, you need to run them in different containers.</p>
 </div>
-<h2 id="state-management">State management</h2>
-<p>Code execution within the same <code>client</code> context is stateful i.e. you can reference variables from previous executions. Code executions in different client contexts are isolated from each other:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client_1</span><span class="p">:</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client_1</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;x = 1&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client_1</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;print(x)&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client_2</span><span class="p">:</span>  <span class="c1"># (4)!</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>            <span class="k">await</span> <span class="n">client_2</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;print(x)&quot;</span><span class="p">)</span>  <span class="c1"># (5)!</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="k">except</span> <span class="n">ExecutionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="k">assert</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;NameError: name &#39;x&#39; is not defined&quot;</span>
+<h2 id="execution-output-streaming">Execution output streaming</h2>
+<p>Instead of waiting for code execution to complete, output can also be streamed as it is generated:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s2">        import time</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="s2">        for i in range(5):</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">            print(f&quot;Processing step </span><span class="si">{i}</span><span class="s2">&quot;)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s2">            time.sleep(1)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s2">        &quot;&quot;&quot;</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="n">execution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Streaming output:&quot;</span><span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">stream</span><span class="p">():</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received output: </span><span class="si">{</span><span class="n">chunk</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">execution</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>  <span class="c1"># (5)!</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Aggregated output:&quot;</span><span class="p">)</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (6)!</span>
 </span></code></pre></div>
 <ol>
-<li>First client context</li>
-<li>Execute code that defines variable x</li>
-<li>Reference variable x defined in previous execution</li>
-<li>Second client context</li>
-<li>Variable x is not defined in <code>client_2</code> context</li>
-</ol>
-<h2 id="output-streaming">Output streaming</h2>
-<p>The <code>ExecutionClient</code> supports streaming output as it's generated during code execution:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s2">        import time</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s2">        for i in range(5):</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s2">            print(f&quot;Processing step </span><span class="si">{i}</span><span class="s2">&quot;)</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s2">            time.sleep(1)</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="s2">        &quot;&quot;&quot;</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="n">execution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Streaming output:&quot;</span><span class="p">)</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">stream</span><span class="p">():</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received output: </span><span class="si">{</span><span class="n">chunk</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">execution</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>  <span class="c1"># (5)!</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Aggregated output:&quot;</span><span class="p">)</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (6)!</span>
-</span></code></pre></div>
-<ol>
-<li>Code that produces gradual output</li>
+<li>Code that produces gradual output every second</li>
 <li>Submit the code for execution</li>
 <li>Stream the output</li>
 <li>Prints one line per second:
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Received output: Processing step 0
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Received output: Processing step 1
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Received output: Processing step 2
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Received output: Processing step 3
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Received output: Processing step 4
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Received output: Processing step 0
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Received output: Processing step 1
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Received output: Processing step 2
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Received output: Processing step 3
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Received output: Processing step 4
 </span></code></pre></div></li>
-<li>Get the aggregated output as a single result</li>
+<li>Get the aggregated output (returns immediately)</li>
 <li>Prints the aggregated output:
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Aggregated output:
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Processing step 0
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Processing step 1
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Processing step 2
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Processing step 3
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Processing step 4
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Aggregated output:
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Processing step 0
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Processing step 1
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Processing step 2
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Processing step 3
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Processing step 4
 </span></code></pre></div></li>
 </ol>
-<p>The <code>stream()</code> method accepts an optional <code>timeout</code> argument (defaults to <code>120</code> seconds). In case of timeout, the execution is automatically terminated by interrupting the kernel.</p>
-<h2 id="installing-dependencies-at-runtime">Installing dependencies at runtime</h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        <span class="n">execution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;!pip install einops&quot;</span><span class="p">)</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">stream</span><span class="p">():</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="s2">            import einops</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="s2">            print(einops.__version__)</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+<h2 id="install-packages-at-runtime">Install packages at runtime</h2>
+<p>Python packages can be installed at runtime by executing <code>!pip install &lt;package&gt;</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        <span class="n">execution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;!pip install einops&quot;</span><span class="p">)</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">stream</span><span class="p">():</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="s2">            import einops</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="s2">            print(einops.__version__)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
 </span></code></pre></div>
 <ol>
 <li>Install the <code>einops</code> package using pip</li>
 <li>Stream the installation progress. Something like
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Collecting einops
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Downloading einops-0.8.0-py3-none-any.whl (10.0 kB)
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Installing collected packages: einops
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Successfully installed einops-0.8.0
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Collecting einops
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Downloading einops-0.8.0-py3-none-any.whl (10.0 kB)
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Installing collected packages: einops
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Successfully installed einops-0.8.0
 </span></code></pre></div></li>
 <li>Import and use the installed package</li>
 <li>Prints <code>Output: 0.8.0</code></li>
 </ol>
-<p>You can also install and use a package within a single execution. There's no need to have two separate executions as done in the example above.</p>
-<h2 id="creating-and-returning-plots">Creating and returning plots</h2>
-<p>Plots created with <code>matplotlib</code> or other libraries are returned as <a href="https://pillow.readthedocs.io">PIL</a> images. Images are not part of the output stream, but are available as <code>images</code> list in the <code>result</code> object.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        <span class="n">execution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s2">            !pip install matplotlib</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s2">            import matplotlib.pyplot as plt</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="s2">            import numpy as np</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="s2">            x = np.linspace(0, 10, 100)</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="s2">            plt.figure(figsize=(8, 6))</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="s2">            plt.plot(x, np.sin(x))</span>
-</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="s2">            plt.title(&#39;Sine Wave&#39;)</span>
-</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="s2">            plt.show()</span>
-</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
-</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="s2">            print(&quot;Plot generation complete!&quot;)</span>
-</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
-</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">stream</span><span class="p">():</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>
-</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">execution</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>        <span class="n">result</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;sine.png&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+<p>You can also install and use a package in a single execution step, as shown in the <a href="#generate-plots">next section</a>, for example.</p>
+<h2 id="generate-plots">Generate plots</h2>
+<p>Plots generated with <code>matplotlib</code> and other visualization libraries are returned as <a href="https://pillow.readthedocs.io">PIL</a> images. Images are not part of the output stream; they can be obtained from the <a class="autorefs autorefs-internal" href="../api/execution_client/#ipybox.executor.ExecutionResult"><code>result</code></a> object as <code>images</code> list.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>        <span class="n">execution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="s2">            !pip install matplotlib</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="s2">            import matplotlib.pyplot as plt</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="s2">            import numpy as np</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="s2">            x = np.linspace(0, 10, 100)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="s2">            plt.figure(figsize=(8, 6))</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="s2">            plt.plot(x, np.sin(x))</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="s2">            plt.title(&#39;Sine Wave&#39;)</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="s2">            plt.show()</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="s2">            print(&quot;Plot generation complete!&quot;)</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">stream</span><span class="p">():</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">execution</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>        <span class="n">result</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;sine.png&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
 </span></code></pre></div>
 <ol>
 <li>Install <code>matplotlib</code> and generate a plot</li>
 <li>Stream output text (installation progress and <code>print</code> statement)</li>
 <li>Get attached image from execution result and save it as <a href="../img/sine.png">sine.png</a></li>
 </ol>
-<h2 id="bind-mounts">Bind mounts</h2>
-<p>Bind mounts allow executed code to read and write files on the host machine.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">await</span> <span class="n">aiofiles</span><span class="o">.</span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">await</span> <span class="n">aiofiles</span><span class="o">.</span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">binds</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="s2">&quot;./data&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="s2">&quot;./output&quot;</span><span class="p">:</span> <span class="s2">&quot;output&quot;</span><span class="p">,</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="k">async</span> <span class="k">with</span> <span class="n">aiofiles</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;data/input.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="k">await</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">)</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">binds</span><span class="o">=</span><span class="n">binds</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>        <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="s2">            with open(&#39;data/input.txt&#39;) as f:</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="s2">                data = f.read()</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="s2">            processed = data.upper()</span>
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
-</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="s2">            with open(&#39;output/result.txt&#39;, &#39;w&#39;) as f:</span>
-</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="s2">                f.write(processed)</span>
-</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
-</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>
-</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="k">async</span> <span class="k">with</span> <span class="n">aiofiles</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;output/result.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  <span class="c1"># (5)!</span>
-</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;HELLO WORLD&quot;</span>
-</span></code></pre></div>
-<ol>
-<li>Map host paths to container paths.</li>
-<li>For reading files from host.</li>
-<li>For writing files to host.</li>
-<li>Read from mounted <code>data</code> directory, convert to uppercase and write to mounted <code>output</code> directory</li>
-<li>Verify the results on host</li>
-</ol>
 <h2 id="environment-variables">Environment variables</h2>
-<p>Environment variables can be set on the container for passing secrets or configuration data, for example.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Define environment variables for the container</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;API_KEY&quot;</span><span class="p">:</span> <span class="s2">&quot;secret-key-123&quot;</span><span class="p">,</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="s2">            import os</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="s2">            api_key = os.environ[&#39;API_KEY&#39;]</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="s2">            print(f&quot;Using API key: </span><span class="si">{api_key}</span><span class="s2">&quot;)</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="s2">            debug = bool(int(os.environ.get(&#39;DEBUG&#39;, &#39;0&#39;)))</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="s2">            if debug:</span>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="s2">                print(&quot;Debug mode enabled&quot;)</span>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+<p>Environment variables for the container can be passed to the <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer"><code>ExecutionContainer</code></a> constructor.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;API_KEY&quot;</span><span class="p">:</span> <span class="s2">&quot;secret-key-123&quot;</span><span class="p">,</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="s2">            import os</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="s2">            api_key = os.environ[&#39;API_KEY&#39;]</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="s2">            print(f&quot;Using API key: </span><span class="si">{api_key}</span><span class="s2">&quot;)</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="s2">            debug = bool(int(os.environ.get(&#39;DEBUG&#39;, &#39;0&#39;)))</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="s2">            if debug:</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s2">                print(&quot;Debug mode enabled&quot;)</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (3)!</span>
 </span></code></pre></div>
 <ol>
-<li>Define environment variables for the container</li>
+<li>Set environment variables for the container</li>
 <li>Access environment variables in executed code</li>
 <li>Prints
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Using API key: secret-key-123
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Debug mode enabled
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Using API key: secret-key-123
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Debug mode enabled
 </span></code></pre></div></li>
 </ol>
-<h2 id="manual-container-lifecycle-management">Manual container lifecycle management</h2>
-<p>Instead of using <code>ExecutionContainer</code> as a context manager, you can also manually <code>run()</code> and <code>kill()</code> the container. Setting a user-defined port (e.g. <code>7777</code> in the example below) is optional.</p>
-<p>This is useful for running the container on a separate host listening to a user-defined host port (e.g. <code>7777</code> in the example below).</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">container</span> <span class="o">=</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">executor_port</span><span class="o">=</span><span class="mi">7777</span><span class="p">)</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">await</span> <span class="n">container</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">assert</span> <span class="n">container</span><span class="o">.</span><span class="n">executor_port</span> <span class="o">==</span> <span class="mi">7777</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># do some work ...</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">await</span> <span class="n">container</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>  <span class="c1"># (3)!</span>
-</span></code></pre></div>
-<ol>
-<li>Create an <code>ExecutionContainer</code> instance using a fixed port.</li>
-<li>Run the container (detached).</li>
-<li>Cleanup.</li>
-</ol>
-<h2 id="using-a-remote-docker_host">Using a remote <code>DOCKER_HOST</code></h2>
-<p>If you want to run the execution container on a remote host but want to manage the container locally, you can set the <code>DOCKER_HOST</code> <a href="https://docs.docker.com/reference/cli/docker/#environment-variables">environment variable</a> to the remote host. The following example assumes that the remote Docker daemon has been configured to accept <code>tcp</code> connections at port <code>2375</code>.</p>
+<h2 id="remote-docker_host">Remote <code>DOCKER_HOST</code></h2>
+<p>If you want to run a code execution container on a remote host but manage the container with <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer"><code>ExecutionContainer</code></a> locally, set the <code>DOCKER_HOST</code> <a href="https://docs.docker.com/reference/cli/docker/#environment-variables">environment variable</a> to that host. The following example assumes that the <a href="https://docs.docker.com/engine/daemon/remote-access/">remote Docker daemon has been configured</a> to accept <code>tcp</code> connections at port <code>2375</code>.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;192.168.94.50&quot;</span>  <span class="c1"># (1)!</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DOCKER_HOST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tcp://</span><span class="si">{</span><span class="n">HOST</span><span class="si">}</span><span class="s2">:2375&quot;</span>  <span class="c1"># (2)!</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
@@ -1065,13 +1043,11 @@
 <li>Creates a container on the remote host</li>
 <li>Create an IPython kernel in the remote container</li>
 </ol>
-<h2 id="using-mcp-servers">Using MCP servers</h2>
-<p><code>ipybox</code> can generate Python code from MCP server metadata. A Python function is generated per MCP tool with function parameters from the tool's input schema. When calling the function, the corresponding tool is executed on the MCP server.</p>
-<p>The generated Python code can be retrieved from the server and provided to an LLM for further processing. For example, this is exactly what <a href="https://gradion-ai.github.io/freeact/"><code>freeact</code></a> agents are doing when utilizing and composing MCP tools in code actions.</p>
-<p><code>ipybox</code> supports both <code>stdio</code> based and <code>sse</code> based MCP servers. A <code>stdio</code> example is shown in the following. For <code>sse</code> based MCP server, provide a server URL as <code>server_params</code> e.g. <code>{"url": "https://&lt;host&gt;:&lt;port&gt;/sse"}</code></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code>stdio</code> based MCP servers are always executed <strong>inside</strong> the <code>ipybox</code> Docker container.</p>
+<h2 id="mcp-integration">MCP integration</h2>
+<p><code>ipybox</code> supports the invocation of <a href="https://modelcontextprotocol.io/">MCP</a> servers in containers via generated MCP client code. An application first calls <a class="autorefs autorefs-internal" href="../api/resource_client/#ipybox.resource.client.ResourceClient.generate_mcp_sources"><code>generate_mcp_sources</code></a> to generate a Python function for each tool provided by an MCP server, using the tool's input schema. This needs to be done only once per MCP server. Generated functions are then available on the container's Python path.</p>
+<div class="admonition example">
+<p class="admonition-title">Generated function</p>
+<p>The example below generates a <a href="https://github.com/gradion-ai/ipybox/blob/main/docs/mcpgen/fetchurl/fetch.py"><code>fetch</code></a> function from the input schema of the <code>fetch</code> tool provided by the <a href="https://github.com/modelcontextprotocol/servers/tree/main/src/fetch">Fetch MCP server</a>.</p>
 </div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ipybox</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionClient</span><span class="p">,</span> <span class="n">ExecutionContainer</span><span class="p">,</span> <span class="n">ResourceClient</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
@@ -1081,40 +1057,26 @@
 </span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="p">}</span>
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;gradion-ai/ipybox&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">resource_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>        <span class="n">generate_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_mcp_sources</span><span class="p">(</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">resource_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>        <span class="n">tool_names</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_mcp_sources</span><span class="p">(</span>  <span class="c1"># (2)!</span>
 </span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>            <span class="n">relpath</span><span class="o">=</span><span class="s2">&quot;mcpgen&quot;</span><span class="p">,</span>
 </span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>            <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;fetchurl&quot;</span><span class="p">,</span>
 </span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>            <span class="n">server_params</span><span class="o">=</span><span class="n">server_params</span><span class="p">,</span>
 </span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>        <span class="p">)</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>        <span class="k">assert</span> <span class="n">generate_result</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;fetch&quot;</span><span class="p">]</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>        <span class="k">assert</span> <span class="n">tool_names</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;fetch&quot;</span><span class="p">]</span>  <span class="c1"># (3)!</span>
 </span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>        <span class="n">generated_sources</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_mcp_sources</span><span class="p">(</span>  <span class="c1"># (5)!</span>
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>            <span class="n">relpath</span><span class="o">=</span><span class="s2">&quot;mcpgen&quot;</span><span class="p">,</span>
-</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>            <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;fetchurl&quot;</span><span class="p">,</span>
-</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>        <span class="p">)</span>
-</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>        <span class="k">assert</span> <span class="s2">&quot;def fetch(params: Params) -&gt; str:&quot;</span> <span class="ow">in</span> <span class="n">generated_sources</span><span class="p">[</span><span class="s2">&quot;fetch&quot;</span><span class="p">]</span>
-</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>
-</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>        <span class="n">generated_sources</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_module_sources</span><span class="p">(</span>  <span class="c1"># (6)!</span>
-</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>            <span class="n">module_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mcpgen.fetchurl.fetch&quot;</span><span class="p">],</span>
-</span><span id="__span-13-25"><a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>        <span class="p">)</span>
-</span><span id="__span-13-26"><a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>        <span class="k">assert</span> <span class="s2">&quot;def fetch(params: Params) -&gt; str:&quot;</span> <span class="ow">in</span> <span class="n">generated_sources</span><span class="p">[</span><span class="s2">&quot;mcpgen.fetchurl.fetch&quot;</span><span class="p">]</span>
-</span><span id="__span-13-27"><a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>
-</span><span id="__span-13-28"><a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-13-29"><a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-13-30"><a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a><span class="s2">            from mcpgen.fetchurl.fetch import Params, fetch</span>
-</span><span id="__span-13-31"><a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a><span class="s2">            print(fetch(Params(url=&quot;https://www.gradion.ai&quot;))[:375])</span>
-</span><span id="__span-13-32"><a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (7)!</span>
-</span><span id="__span-13-33"><a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (8)!</span>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="s2">            from mcpgen.fetchurl.fetch import Params, fetch</span>
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="s2">            print(fetch(Params(url=&quot;https://www.gradion.ai&quot;))[:375])</span>
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (5)!</span>
 </span></code></pre></div>
 <ol>
-<li>An MCP server that fetches content from URLs.</li>
-<li>A <code>ResourceClient</code> is used for generating MCP source code and retrieving it</li>
-<li>Generate client code (functions, inputs, ...) from MCP server metadata</li>
-<li>List of tool names provided bythe MCP server</li>
-<li>Retrieve generated code by reading it from the <code>ipybox</code> container filesystem</li>
-<li>Retrieve generated code by loading the corresponding Python module</li>
-<li>Execute code that imports and uses the generated MCP client code.</li>
+<li>Configuration of the <a href="https://github.com/modelcontextprotocol/servers/tree/main/src/fetch">Fetch MCP server</a>.</li>
+<li>Generate MCP client code from an MCP server config. One MCP client function is generated per MCP tool.</li>
+<li>List of tool names provided by the MCP server. A single <code>fetch</code> tool in this example.</li>
+<li>Execute code that imports and calls the generated MCP client function.</li>
 <li>Prints
 <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>```
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>                         ___                    _
@@ -1126,6 +1088,11 @@
 </span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>```
 </span></code></pre></div></li>
 </ol>
+<p>Calling a generated MCP client function, executes the corresponding MCP tool. Tools of <code>stdio</code> based MCP servers are always executed <strong>inside</strong> the container, while <code>sse</code> based MCP servers are expected to run elsewhere. Generated MCP client code can be downloaded from the container with <a class="autorefs autorefs-internal" href="../api/resource_client/#ipybox.resource.client.ResourceClient.get_mcp_sources"><code>get_mcp_sources</code></a> (not shown).</p>
+<div class="admonition example">
+<p class="admonition-title">Application example</p>
+<p><a href="https://gradion-ai.github.io/freeact/"><code>freeact</code></a> agents use the <code>ipybox</code> MCP integration for <a href="https://gradion-ai.github.io/freeact/mcp-integration/">calling MCP tools</a> in their code actions.</p>
+</div>
 
 
 
@@ -1161,7 +1128,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024 Gradion AI
+      Copyright &copy; 2025 Gradion AI
     </div>
   
   
@@ -1186,10 +1153,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.instant.progress", "navigation.top", "navigation.tracking", "search.suggest", "toc.follow", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.instant.progress", "navigation.top", "navigation.tracking", "search.suggest", "toc.follow", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>

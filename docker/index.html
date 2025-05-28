@@ -11,21 +11,25 @@
       
       
       
+        <link rel="prev" href="../installation/">
       
       
-      <link rel="icon" href="/assets/images/favicon.png">
+        <link rel="next" href="../usage/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>ipybox</title>
+        <title>Docker - ipybox</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="/assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#docker-images" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -81,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="ipybox" class="md-header__button md-logo" aria-label="ipybox" data-md-component="logo">
+    <a href=".." title="ipybox" class="md-header__button md-logo" aria-label="ipybox" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -101,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Docker
             
           </span>
         </div>
@@ -222,11 +231,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="/." class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href=".." class="md-tabs__link">
           
   
   
@@ -246,7 +257,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/api/execution_container/" class="md-tabs__link">
+        <a href="../api/execution_container/" class="md-tabs__link">
           
   
   
@@ -280,7 +291,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="ipybox" class="md-nav__button md-logo" aria-label="ipybox" data-md-component="logo">
+    <a href=".." title="ipybox" class="md-nav__button md-logo" aria-label="ipybox" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -307,26 +318,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
         
           
-          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
             
   
   
@@ -339,7 +355,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             User Guide
@@ -353,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -376,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/quickstart/" class="md-nav__link">
+      <a href="../quickstart/" class="md-nav__link">
         
   
   
@@ -399,7 +415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         
   
   
@@ -419,10 +435,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/docker/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Docker
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -433,6 +471,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#default-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default image
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom image
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -445,7 +521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/usage/" class="md-nav__link">
+      <a href="../usage/" class="md-nav__link">
         
   
   
@@ -518,7 +594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/api/execution_container/" class="md-nav__link">
+      <a href="../api/execution_container/" class="md-nav__link">
         
   
   
@@ -541,7 +617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/api/execution_client/" class="md-nav__link">
+      <a href="../api/execution_client/" class="md-nav__link">
         
   
   
@@ -564,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/api/resource_client/" class="md-nav__link">
+      <a href="../api/resource_client/" class="md-nav__link">
         
   
   
@@ -604,6 +680,34 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#default-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default image
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom image
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -615,8 +719,50 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="docker-images">Docker images</h1>
+<p>You can either use one of the <a href="https://gradion-ai.github.io/freeact/environment/#prebuilt-docker-images">prebuilt</a> <code>ipybox</code> Docker images provided by <a href="https://gradion-ai.github.io/freeact/"><code>freeact</code></a> or build your own image with <a href="#default-image">default</a> or <a href="#custom-image">custom</a> dependencies.</p>
+<h3 id="default-image">Default image</h3>
+<p>To build a default <code>ipybox</code> Docker image with name <code>gradion-ai/ipybox</code> and minimal dependencies, run:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ipybox<span class="w"> </span>build
+</span></code></pre></div>
+<h3 id="custom-image">Custom image</h3>
+<p>To build a custom <code>ipybox</code> Docker image with additional Python packages preinstalled, create a <code>dependencies.txt</code> file that follows the <a href="https://python-poetry.org/docs/dependency-specification/">Poetry dependency specification format</a>. For example:</p>
+<div class="language-toml highlight"><span class="filename">dependencies.txt</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">pandas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^2.2&quot;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">scikit-learn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^1.5&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">matplotlib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.9&quot;</span>
+</span></code></pre></div>
+<p>Then build the image by referencing the <code>dependencies.txt</code> file and optionally providing a custom tag:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ipybox<span class="w"> </span>build<span class="w"> </span>-d<span class="w"> </span>dependencies.txt<span class="w"> </span>-t<span class="w"> </span>gradion-ai/ipybox-custom:v1
+</span></code></pre></div>
+<p>Code executed in containers of the custom <code>gradion-ai/ipybox-custom:v1</code> image can now import these packages.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Containers created from images that have been built without the <code>-r</code> or <code>--root</code> option will run with the same user and group IDs as the user who built the image. With the <code>-r</code> or <code>--root</code> option, containers will run as <code>root</code>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can also <a href="../usage/#install-packages-at-runtime">install packages at runtime</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -664,10 +810,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "/", "features": ["navigation.tabs", "navigation.sections", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.instant.progress", "navigation.top", "navigation.tracking", "search.suggest", "toc.follow", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "/assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.instant.progress", "navigation.top", "navigation.tracking", "search.suggest", "toc.follow", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>
