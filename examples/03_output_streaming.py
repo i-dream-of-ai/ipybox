@@ -1,7 +1,3 @@
-"""
-Example demonstrating output streaming during code execution.
-"""
-
 import asyncio
 
 from ipybox import ExecutionClient, ExecutionContainer

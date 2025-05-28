@@ -1,7 +1,3 @@
-"""
-Basic usage example demonstrating how to execute Python code in an execution container.
-"""
-
 import asyncio
 
 # --8<-- [start:import]

@@ -1,7 +1,3 @@
-"""
-Example demonstrating how to use bind mounts to access host files.
-"""
-
 import asyncio
 
 import aiofiles

@@ -80,8 +80,10 @@ markdown_extensions:
 
 nav:
   - User Guide:
-    - Overview: index.md
+    - Introduction: index.md
+    - Quickstart: quickstart.md
     - Installation: installation.md
+    - Docker: docker.md
     - Usage: usage.md
   - API Documentation:
     - ExecutionContainer: api/execution_container.md

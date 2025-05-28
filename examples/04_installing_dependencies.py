@@ -1,7 +1,3 @@
-"""
-Example demonstrating how to install dependencies at runtime.
-"""
-
 import asyncio
 
 from ipybox import ExecutionClient, ExecutionContainer

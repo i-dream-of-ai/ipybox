@@ -1,14 +1,19 @@
 # Usage
 
-The two main classes of the `ipybox` package are [`ExecutionContainer`](api/execution_container.md) and [`ExecutionClient`](api/execution_client.md).
+Code examples in the following sections are from the project's [examples](https://github.com/gradion-ai/ipybox/tree/main/examples) directory. They use a [default](docker.md#default-image) `gradion-ai/ipybox` Docker image that you need to build yourself with
 
-!!! Note
+```bash
+python -m ipybox build
+```
 
-    Runnable scripts of the source code on this page are available in the [examples](https://github.com/gradion-ai/ipybox/tree/main/examples) directory.
+!!! tip
+    Alternatively, you can also use one of the [prebuilt](https://gradion-ai.github.io/freeact/environment/#prebuilt-docker-images) Docker images, as done in [quickstart](quickstart.md), for example.
 
 ## Basic usage
 
-For executing code in `ipybox` you first need to create a Docker container from an `ipybox` [Docker image](installation.md#docker-image) and then an IPython kernel running in that container. This is done with the `ExecutionContainer` and the `ExecutionClient` context managers.
+Use the [`ExecutionContainer`][ipybox.container.ExecutionContainer] context manager to create a container from an `ipybox` Docker image. The container is created on entering the context manager and removed on exit.
+Use the [`ExecutionClient`][ipybox.executor.ExecutionClient] context manager to manage the lifecycle of an IPython kernel within the container. A kernel is created on entering the context manager and removed on exit.
+Call [`execute`][ipybox.executor.ExecutionClient.execute] on an `ExecutionClient` instance to execute code in its kernel.
 
 ```python
 --8<-- "examples/01_basic_usage.py:import"
@@ -16,41 +21,58 @@ For executing code in `ipybox` you first need to create a Docker container from 
 --8<-- "examples/01_basic_usage.py:usage"
 ```
 
-1. Create and start a container for code execution
-2. Create and connect to an IPython kernel
+1. Create and start a code execution container
+2. Create an IPython kernel in the container
 3. Execute Python code and await the result
-4. Output: `Hello, world!`
+4. Prints: `Output: Hello, world!`
 
-The default image used by `ExecutionContainer` is `gradion-ai/ipybox`. You can specify a custom image with the `tag` argument like in `ExecutionContainer(tag="my-box:v1")`, for example.
+The [`execute`][ipybox.executor.ExecutionClient.execute] method accepts an optional `timeout` argument (defaults to `120` seconds). On timeout, the execution is terminated by interrupting the kernel and a `TimeoutError` is raised.
 
-!!! Note
+!!! Info
 
-    Instead of letting the `ExecutionContainer` context manager handle the lifecycle of the container, you can also [manually manage the container lifecycle](usage.md#manual-container-lifecycle-management).
+    Instead of using the [`ExecutionContainer`][ipybox.container.ExecutionContainer] context manager for lifecycle management, you can also manually [`run`][ipybox.container.ExecutionContainer.run] and [`kill`][ipybox.container.ExecutionContainer.kill] a container.
+
+    ```python
+    --8<-- "examples/08_manual_lifecycle.py:run-container"
+
+    # do some work ...
+
+    --8<-- "examples/08_manual_lifecycle.py:kill-container"
+    ```
+
+    1. Create an `ExecutionContainer` instance.
+    2. Run the container (detached).
+    3. Kill the container.
 
 
-## State management
+## Stateful code execution
 
-Code execution within the same `client` context is stateful i.e. you can reference variables from previous executions. Code executions in different client contexts are isolated from each other:
+Code executions with the same [`ExecutionClient`][ipybox.executor.ExecutionClient] instance are stateful. Definitions and variables from previous executions can be used in later executions. Code executions with different `ExecutionClient` instances run in different kernels and do not share in-memory state.
 
 ```python
 --8<-- "examples/02_state_management.py:usage"
 ```
 
-1. First client context
-2. Execute code that defines variable x
-3. Reference variable x defined in previous execution
-4. Second client context
-5. Variable x is not defined in `client_2` context
+1. First client instance
+2. Execute code that defines variable `x`
+3. Use variable `x` defined in previous execution
+4. Second client instance
+5. Variable `x` is not defined in `client_2`'s kernel
 
-## Output streaming
+!!! note
 
-The `ExecutionClient` supports streaming output as it's generated during code execution:
+    While kernels in the same container don't share in-memory state, they can still exchange data by reading and writing files to the shared container filesystem.
+    For full isolation of code executions, you need to run them in different containers.
+
+## Execution output streaming
+
+Instead of waiting for code execution to complete, output can also be streamed as it is generated:
 
 ```python
 --8<-- "examples/03_output_streaming.py:usage"
 ```
 
-1. Code that produces gradual output
+1. Code that produces gradual output every second
 2. Submit the code for execution
 3. Stream the output
 4. Prints one line per second:
@@ -61,7 +83,7 @@ The `ExecutionClient` supports streaming output as it's generated during code ex
     Received output: Processing step 3
     Received output: Processing step 4
     ```
-5. Get the aggregated output as a single result
+5. Get the aggregated output (returns immediately)
 6. Prints the aggregated output:
     ```
     Aggregated output:
@@ -72,9 +94,9 @@ The `ExecutionClient` supports streaming output as it's generated during code ex
     Processing step 4
     ```
 
-The `stream()` method accepts an optional `timeout` argument (defaults to `120` seconds). In case of timeout, the execution is automatically terminated by interrupting the kernel.
+## Install packages at runtime
 
-## Installing dependencies at runtime
+Python packages can be installed at runtime by executing `!pip install <package>`:
 
 ```python
 --8<-- "examples/04_installing_dependencies.py:usage"
@@ -91,11 +113,11 @@ The `stream()` method accepts an optional `timeout` argument (defaults to `120` 
 3. Import and use the installed package
 4. Prints `Output: 0.8.0`
 
-You can also install and use a package within a single execution. There's no need to have two separate executions as done in the example above.
+You can also install and use a package in a single execution step, as shown in the [next section](#generate-plots), for example.
 
-## Creating and returning plots
+## Generate plots
 
-Plots created with `matplotlib` or other libraries are returned as [PIL](https://pillow.readthedocs.io) images. Images are not part of the output stream, but are available as `images` list in the `result` object.
+Plots generated with `matplotlib` and other visualization libraries are returned as [PIL](https://pillow.readthedocs.io) images. Images are not part of the output stream; they can be obtained from the [`result`][ipybox.executor.ExecutionResult] object as `images` list.
 
 ```python
 --8<-- "examples/05_creating_plots.py:usage"
@@ -105,29 +127,15 @@ Plots created with `matplotlib` or other libraries are returned as [PIL](https:/
 2. Stream output text (installation progress and `print` statement)
 3. Get attached image from execution result and save it as [sine.png](img/sine.png)
 
-## Bind mounts
-
-Bind mounts allow executed code to read and write files on the host machine.
-
-```python
---8<-- "examples/06_bind_mounts.py:usage"
-```
-
-1. Map host paths to container paths.
-2. For reading files from host.
-3. For writing files to host.
-4. Read from mounted `data` directory, convert to uppercase and write to mounted `output` directory
-5. Verify the results on host
-
 ## Environment variables
 
-Environment variables can be set on the container for passing secrets or configuration data, for example.
+Environment variables for the container can be passed to the [`ExecutionContainer`][ipybox.container.ExecutionContainer] constructor.
 
 ```python
 --8<-- "examples/07_environment_variables.py:usage"
 ```
 
-1. Define environment variables for the container
+1. Set environment variables for the container
 2. Access environment variables in executed code
 3. Prints
     ```
@@ -135,29 +143,10 @@ Environment variables can be set on the container for passing secrets or configu
     Debug mode enabled
     ```
 
-## Manual container lifecycle management
 
-Instead of using `ExecutionContainer` as a context manager, you can also manually `run()` and `kill()` the container. Setting a user-defined port (e.g. `7777` in the example below) is optional.
+## Remote `DOCKER_HOST`
 
-
-This is useful for running the container on a separate host listening to a user-defined host port (e.g. `7777` in the example below).
-
-```python
---8<-- "examples/08_manual_lifecycle.py:run-container"
-
-# do some work ...
-
---8<-- "examples/08_manual_lifecycle.py:kill-container"
-```
-
-1. Create an `ExecutionContainer` instance using a fixed port.
-2. Run the container (detached).
-3. Cleanup.
-
-
-## Using a remote `DOCKER_HOST`
-
-If you want to run the execution container on a remote host but want to manage the container locally, you can set the `DOCKER_HOST` [environment variable](https://docs.docker.com/reference/cli/docker/#environment-variables) to the remote host. The following example assumes that the remote Docker daemon has been configured to accept `tcp` connections at port `2375`.
+If you want to run a code execution container on a remote host but manage the container with [`ExecutionContainer`][ipybox.container.ExecutionContainer] locally, set the `DOCKER_HOST` [environment variable](https://docs.docker.com/reference/cli/docker/#environment-variables) to that host. The following example assumes that the [remote Docker daemon has been configured](https://docs.docker.com/engine/daemon/remote-access/) to accept `tcp` connections at port `2375`.
 
 ```python
 --8<-- "examples/09_remote_docker_host.py:usage"
@@ -168,32 +157,24 @@ If you want to run the execution container on a remote host but want to manage t
 3. Creates a container on the remote host
 4. Create an IPython kernel in the remote container
 
-## Using MCP servers
+## MCP integration
 
-`ipybox` can generate Python code from MCP server metadata. A Python function is generated per MCP tool with function parameters from the tool's input schema. When calling the function, the corresponding tool is executed on the MCP server.
+`ipybox` supports the invocation of [MCP](https://modelcontextprotocol.io/) servers in containers via generated MCP client code. An application first calls [`generate_mcp_sources`][ipybox.resource.client.ResourceClient.generate_mcp_sources] to generate a Python function for each tool provided by an MCP server, using the tool's input schema. This needs to be done only once per MCP server. Generated functions are then available on the container's Python path.
 
-The generated Python code can be retrieved from the server and provided to an LLM for further processing. For example, this is exactly what [`freeact`](https://gradion-ai.github.io/freeact/) agents are doing when utilizing and composing MCP tools in code actions.
+!!! example "Generated function"
 
-`ipybox` supports both `stdio` based and `sse` based MCP servers. A `stdio` example is shown in the following. For `sse` based MCP server, provide a server URL as `server_params` e.g. `{"url": "https://<host>:<port>/sse"}`
-
-!!! note
-
-    `stdio` based MCP servers are always executed **inside** the `ipybox` Docker container.
-
+    The example below generates a [`fetch`](https://github.com/gradion-ai/ipybox/blob/main/docs/mcpgen/fetchurl/fetch.py) function from the input schema of the `fetch` tool provided by the [Fetch MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch).
 
 ```python
 --8<-- "examples/10_mcp_support.py:import"
 --8<-- "examples/10_mcp_support.py:usage"
 ```
 
-1. An MCP server that fetches content from URLs.
-2. A `ResourceClient` is used for generating MCP source code and retrieving it
-3. Generate client code (functions, inputs, ...) from MCP server metadata
-4. List of tool names provided bythe MCP server
-5. Retrieve generated code by reading it from the `ipybox` container filesystem
-6. Retrieve generated code by loading the corresponding Python module
-7. Execute code that imports and uses the generated MCP client code.
-8. Prints
+1. Configuration of the [Fetch MCP server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch).
+2. Generate MCP client code from an MCP server config. One MCP client function is generated per MCP tool.
+3. List of tool names provided by the MCP server. A single `fetch` tool in this example.
+4. Execute code that imports and calls the generated MCP client function.
+5. Prints
 ````
 ```
                          ___                    _
@@ -204,3 +185,9 @@ The generated Python code can be retrieved from the server and provided to an LL
 /____/
 ```
 ````
+
+Calling a generated MCP client function, executes the corresponding MCP tool. Tools of `stdio` based MCP servers are always executed **inside** the container, while `sse` based MCP servers are expected to run elsewhere. Generated MCP client code can be downloaded from the container with [`get_mcp_sources`][ipybox.resource.client.ResourceClient.get_mcp_sources] (not shown).
+
+!!! example "Application example"
+
+    [`freeact`](https://gradion-ai.github.io/freeact/) agents use the `ipybox` MCP integration for [calling MCP tools](https://gradion-ai.github.io/freeact/mcp-integration/) in their code actions.

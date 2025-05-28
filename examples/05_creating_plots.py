@@ -1,7 +1,3 @@
-"""
-Example demonstrating how to create and save matplotlib plots.
-"""
-
 import asyncio
 
 from ipybox import ExecutionClient, ExecutionContainer
