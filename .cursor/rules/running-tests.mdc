@@ -8,15 +8,20 @@ alwaysApply: false
 ## Running Tests
 
 ### General
-- `pytest -xsv tests/` for running all unit and integration tests.
-- `pytest -xsv tests/ --cov=ipybox --cov-report=term` for running all unit and integration tests and generating a coverage report.
+- `invoke test` for running all unit and integration tests.
+- `invoke test --cov` for running all unit and integration tests and generating a coverage report.
 
 ### Unit Tests
-- `pytest -xsv tests/unit` for running unit tests.
-- `pytest -xsv tests/unit --cov=ipybox --cov-report=term` for running unit tests and generating a coverage report.
+- `invoke ut` for running unit tests.
+- `invoke ut --cov` for running unit tests and generating a coverage report.
 
 ### Integration Tests
-- `pytest -xsv tests/integration` for running all integration tests.
-- `pytest -xsv tests/integration --cov=ipybox --cov-report=term` for running all integration tests and generating a coverage report.
+- `invoke it` for running all integration tests.
+- `invoke it --cov` for running all integration tests and generating a coverage report.
 - `pytest -xsv tests/integration/test_[name].py` for running a single integration test file.
 - `pytest -xsv tests/integration/test_[name].py::[test-name]` for running a single integration test.
+
+## Additional Options
+
+All invoke test commands use `-xsv` flags by default for verbose output and stopping on first failure.
+Coverage reports are displayed in the terminal and cover the `ipybox` package.

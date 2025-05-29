@@ -33,5 +33,5 @@ invoke cc
 Run tests:
 
 ```bash
-pytest -s tests
+invoke test
 ```
