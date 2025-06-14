@@ -24,7 +24,7 @@ Designed for AI agents that interact with their environment through code executi
 - Stream code execution output as it is generated
 - Install Python packages at build time or runtime
 - Return plots generated with visualization libraries
-- [Invocation of MCP servers](https://gradion-ai.github.io/ipybox/usage.html#mcp-integration) via generated client code
+- [Invocation of MCP servers](https://gradion-ai.github.io/ipybox/usage/#mcp-integration) via generated client code
 - Flexible deployment options, local or remote
 - `asyncio` API for managing the execution environment
 
