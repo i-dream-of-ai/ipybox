@@ -556,6 +556,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#file-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      File operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       Environment variables
@@ -579,6 +588,21 @@
       MCP integration
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="MCP integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-mcp-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote MCP servers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -789,6 +813,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#file-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      File operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
       Environment variables
@@ -812,6 +845,21 @@
       MCP integration
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="MCP integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-mcp-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remote MCP servers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1001,41 +1049,73 @@ For full isolation of code executions, you need to run them in different contain
 <li>Stream output text (installation progress and <code>print</code> statement)</li>
 <li>Get attached image from execution result and save it as <a href="../img/sine.png">sine.png</a></li>
 </ol>
+<h2 id="file-operations">File operations</h2>
+<p>Files and directories can be transferred between the host and container using the <a class="autorefs autorefs-internal" href="../api/resource_client/#ipybox.resource.client.ResourceClient"><code>ResourceClient</code></a>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">input_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">()</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">resource_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">res_client</span><span class="p">:</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">exec_client</span><span class="p">:</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>            <span class="k">await</span> <span class="n">res_client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s2">&quot;data/example.txt&quot;</span><span class="p">,</span> <span class="n">input_dir</span> <span class="o">/</span> <span class="s2">&quot;example.txt&quot;</span><span class="p">)</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>            <span class="k">await</span> <span class="n">res_client</span><span class="o">.</span><span class="n">upload_directory</span><span class="p">(</span><span class="s2">&quot;data/subdir&quot;</span><span class="p">,</span> <span class="n">input_dir</span> <span class="o">/</span> <span class="s2">&quot;subdir&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>            <span class="k">await</span> <span class="n">exec_client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="s2">                import os</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="s2">                import shutil</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="s2">                os.makedirs(&#39;output&#39;, exist_ok=True)</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s2">                shutil.copy(&#39;data/example.txt&#39;, &#39;output/example.txt&#39;)</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s2">                shutil.copytree(&#39;data/subdir&#39;, &#39;output/subdir&#39;)</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>            <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="s2">&quot;output&quot;</span><span class="p">)</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>            <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>            <span class="k">await</span> <span class="n">res_client</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="s2">&quot;output/example.txt&quot;</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;example.txt&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>            <span class="k">await</span> <span class="n">res_client</span><span class="o">.</span><span class="n">download_directory</span><span class="p">(</span><span class="s2">&quot;output/subdir&quot;</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;subdir&quot;</span><span class="p">)</span>  <span class="c1"># (5)!</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>            <span class="k">await</span> <span class="n">res_client</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s2">&quot;data/example.txt&quot;</span><span class="p">)</span>  <span class="c1"># (6)!</span>
+</span></code></pre></div>
+<ol>
+<li>Upload a single file to the container</li>
+<li>Upload an entire directory to the container</li>
+<li>Copy files within the container</li>
+<li>Download a file from the container</li>
+<li>Download a directory from the container</li>
+<li>Delete a file in the container</li>
+</ol>
 <h2 id="environment-variables">Environment variables</h2>
 <p>Environment variables for the container can be passed to the <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer"><code>ExecutionContainer</code></a> constructor.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;API_KEY&quot;</span><span class="p">:</span> <span class="s2">&quot;secret-key-123&quot;</span><span class="p">,</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="s2">            import os</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="s2">            api_key = os.environ[&#39;API_KEY&#39;]</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="s2">            print(f&quot;Using API key: </span><span class="si">{api_key}</span><span class="s2">&quot;)</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="s2">            debug = bool(int(os.environ.get(&#39;DEBUG&#39;, &#39;0&#39;)))</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="s2">            if debug:</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s2">                print(&quot;Debug mode enabled&quot;)</span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;API_KEY&quot;</span><span class="p">:</span> <span class="s2">&quot;secret-key-123&quot;</span><span class="p">,</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="s2">            import os</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="s2">            api_key = os.environ[&#39;API_KEY&#39;]</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="s2">            print(f&quot;Using API key: </span><span class="si">{api_key}</span><span class="s2">&quot;)</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="s2">            debug = bool(int(os.environ.get(&#39;DEBUG&#39;, &#39;0&#39;)))</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="s2">            if debug:</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="s2">                print(&quot;Debug mode enabled&quot;)</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (3)!</span>
 </span></code></pre></div>
 <ol>
 <li>Set environment variables for the container</li>
 <li>Access environment variables in executed code</li>
 <li>Prints
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Using API key: secret-key-123
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Debug mode enabled
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Using API key: secret-key-123
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Debug mode enabled
 </span></code></pre></div></li>
 </ol>
 <h2 id="remote-docker_host">Remote <code>DOCKER_HOST</code></h2>
 <p>If you want to run a code execution container on a remote host but manage the container with <a class="autorefs autorefs-internal" href="../api/execution_container/#ipybox.container.ExecutionContainer"><code>ExecutionContainer</code></a> locally, set the <code>DOCKER_HOST</code> <a href="https://docs.docker.com/reference/cli/docker/#environment-variables">environment variable</a> to that host. The following example assumes that the <a href="https://docs.docker.com/engine/daemon/remote-access/">remote Docker daemon has been configured</a> to accept <code>tcp</code> connections at port <code>2375</code>.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;192.168.94.50&quot;</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DOCKER_HOST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tcp://</span><span class="si">{</span><span class="n">HOST</span><span class="si">}</span><span class="s2">:2375&quot;</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;ghcr.io/gradion-ai/ipybox:minimal&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">HOST</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>  <span class="c1"># (4)!</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;17 ** 0.13&quot;</span><span class="p">)</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">HOST</span> <span class="o">=</span> <span class="s2">&quot;192.168.94.50&quot;</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DOCKER_HOST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tcp://</span><span class="si">{</span><span class="n">HOST</span><span class="si">}</span><span class="s2">:2375&quot;</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;ghcr.io/gradion-ai/ipybox:minimal&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">HOST</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;17 ** 0.13&quot;</span><span class="p">)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <ol>
 <li>Example IP address of the remote Docker host</li>
@@ -1049,28 +1129,28 @@ For full isolation of code executions, you need to run them in different contain
 <p class="admonition-title">Generated function</p>
 <p>The example below generates a <a href="https://github.com/gradion-ai/ipybox/blob/main/docs/mcpgen/fetchurl/fetch.py"><code>fetch</code></a> function from the input schema of the <code>fetch</code> tool provided by the <a href="https://github.com/modelcontextprotocol/servers/tree/main/src/fetch">Fetch MCP server</a>.</p>
 </div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ipybox</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionClient</span><span class="p">,</span> <span class="n">ExecutionContainer</span><span class="p">,</span> <span class="n">ResourceClient</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">server_params</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># (1)!</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;uvx&quot;</span><span class="p">,</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mcp-server-fetch&quot;</span><span class="p">],</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="p">}</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;gradion-ai/ipybox&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">resource_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>        <span class="n">tool_names</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_mcp_sources</span><span class="p">(</span>  <span class="c1"># (2)!</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>            <span class="n">relpath</span><span class="o">=</span><span class="s2">&quot;mcpgen&quot;</span><span class="p">,</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>            <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;fetchurl&quot;</span><span class="p">,</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>            <span class="n">server_params</span><span class="o">=</span><span class="n">server_params</span><span class="p">,</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>        <span class="p">)</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>        <span class="k">assert</span> <span class="n">tool_names</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;fetch&quot;</span><span class="p">]</span>  <span class="c1"># (3)!</span>
-</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="s2">            from mcpgen.fetchurl.fetch import Params, fetch</span>
-</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="s2">            print(fetch(Params(url=&quot;https://www.gradion.ai&quot;))[:375])</span>
-</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
-</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (5)!</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ipybox</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionClient</span><span class="p">,</span> <span class="n">ExecutionContainer</span><span class="p">,</span> <span class="n">ResourceClient</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">server_params</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;uvx&quot;</span><span class="p">,</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    <span class="s2">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mcp-server-fetch&quot;</span><span class="p">],</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="p">}</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;gradion-ai/ipybox&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">resource_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>        <span class="n">tool_names</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_mcp_sources</span><span class="p">(</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>            <span class="n">relpath</span><span class="o">=</span><span class="s2">&quot;mcpgen&quot;</span><span class="p">,</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>            <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;fetchurl&quot;</span><span class="p">,</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>            <span class="n">server_params</span><span class="o">=</span><span class="n">server_params</span><span class="p">,</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>        <span class="p">)</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>        <span class="k">assert</span> <span class="n">tool_names</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;fetch&quot;</span><span class="p">]</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="s2">            from mcpgen.fetchurl.fetch import Params, fetch</span>
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="s2">            print(fetch(Params(url=&quot;https://www.gradion.ai&quot;))[:375])</span>
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (5)!</span>
 </span></code></pre></div>
 <ol>
 <li>Configuration of the <a href="https://github.com/modelcontextprotocol/servers/tree/main/src/fetch">Fetch MCP server</a>.</li>
@@ -1078,21 +1158,59 @@ For full isolation of code executions, you need to run them in different contain
 <li>List of tool names provided by the MCP server. A single <code>fetch</code> tool in this example.</li>
 <li>Execute code that imports and calls the generated MCP client function.</li>
 <li>Prints
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>```
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>                         ___                    _
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>   ____ __________ _____/ (_)___  ____   ____ _(_)
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  / __ `/ ___/ __ `/ __  / / __ \/ __ \ / __ `/ /
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a> / /_/ / /  / /_/ / /_/ / / /_/ / / / // /_/ / /
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a> \__, /_/   \__,_/\__,_/_/\____/_/ /_(_)__,_/_/
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>/____/
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>```
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>```
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>                         ___                    _
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>   ____ __________ _____/ (_)___  ____   ____ _(_)
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  / __ `/ ___/ __ `/ __  / / __ \/ __ \ / __ `/ /
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a> / /_/ / /  / /_/ / /_/ / / /_/ / / / // /_/ / /
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a> \__, /_/   \__,_/\__,_/_/\____/_/ /_(_)__,_/_/
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>/____/
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>```
 </span></code></pre></div></li>
 </ol>
-<p>Calling a generated MCP client function, executes the corresponding MCP tool. Tools of <code>stdio</code> based MCP servers are always executed <strong>inside</strong> the container, while <code>sse</code> based MCP servers are expected to run elsewhere. Generated MCP client code can be downloaded from the container with <a class="autorefs autorefs-internal" href="../api/resource_client/#ipybox.resource.client.ResourceClient.get_mcp_sources"><code>get_mcp_sources</code></a> (not shown).</p>
+<p>Calling a generated MCP client function, executes the corresponding MCP tool. Tools of <code>stdio</code> based MCP servers are always executed <strong>inside</strong> the container, while <code>streamable-http</code> or legacy <code>sse</code> based MCP servers are expected to run elsewhere. Generated MCP client code can be downloaded from the container with <a class="autorefs autorefs-internal" href="../api/resource_client/#ipybox.resource.client.ResourceClient.get_mcp_sources"><code>get_mcp_sources</code></a> (not shown).</p>
 <div class="admonition example">
 <p class="admonition-title">Application example</p>
 <p><a href="https://gradion-ai.github.io/freeact/"><code>freeact</code></a> agents use the <code>ipybox</code> MCP integration for <a href="https://gradion-ai.github.io/freeact/mcp-integration/">calling MCP tools</a> in their code actions.</p>
 </div>
+<h3 id="remote-mcp-servers">Remote MCP servers</h3>
+<p>In addition to <code>stdio</code> based MCP servers that run inside the container, <code>ipybox</code> also supports connecting to remote MCP servers running with <code>streamable-http</code> or legacy <code>sse</code> transports.
+This is demonstrated below with an <a href="https://github.com/gradion-ai/ipybox/blob/main/tests/mcp_server.py">example MCP server</a> that is part of the project. Start the server in a separate terminal on the host machine:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>python<span class="w"> </span>tests/mcp_server.py<span class="w"> </span>--transport<span class="w"> </span>streamable-http<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+</span></code></pre></div>
+<p>Then connect to it from your Python script:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ipybox</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionClient</span><span class="p">,</span> <span class="n">ExecutionContainer</span><span class="p">,</span> <span class="n">ResourceClient</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">server_params</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;streamable_http&quot;</span><span class="p">,</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://[YOUR-HOST-IP-ADDRESS]:8000/mcp&quot;</span><span class="p">,</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="p">}</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionContainer</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s2">&quot;gradion-ai/ipybox&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">container</span><span class="p">:</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">resource_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>        <span class="n">tool_names</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_mcp_sources</span><span class="p">(</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>            <span class="n">relpath</span><span class="o">=</span><span class="s2">&quot;mcpgen&quot;</span><span class="p">,</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>            <span class="n">server_name</span><span class="o">=</span><span class="s2">&quot;test_server&quot;</span><span class="p">,</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>            <span class="n">server_params</span><span class="o">=</span><span class="n">server_params</span><span class="p">,</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>        <span class="p">)</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>        <span class="k">assert</span> <span class="n">tool_names</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;tool_1&quot;</span><span class="p">,</span> <span class="s2">&quot;tool_2&quot;</span><span class="p">]</span>  <span class="c1"># (3)!</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">ExecutionClient</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">container</span><span class="o">.</span><span class="n">executor_port</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="s2">            from mcpgen.test_server.tool_1 import Params, tool_1</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="s2">            response = tool_1(Params(s=&quot;Hello from ipybox!&quot;))</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="s2">            print(response)</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>  <span class="c1"># (4)!</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># (5)!</span>
+</span></code></pre></div>
+<ol>
+<li>Configuration of the test MCP server running on the host machine. Replace <code>[YOUR-HOST-IP-ADDRESS]</code> with your host machine's IP address.</li>
+<li>Generate MCP client code from an MCP server config. One MCP client function is generated per MCP tool.</li>
+<li>List of tool names provided by the test server: <code>tool_1</code> and <code>tool_2</code></li>
+<li>Execute code that imports and calls the generated <code>tool_1</code> function</li>
+<li>Prints: <code>You passed to tool 1: Hello from ipybox!</code></li>
+</ol>
 
 
 
