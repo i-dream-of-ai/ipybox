@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from collections import defaultdict
 from pathlib import Path
 
@@ -8,6 +9,8 @@ from aiodocker.containers import DockerContainer
 from ipybox.utils import arun
 
 DEFAULT_TAG = "gradion-ai/ipybox"
+
+logger = logging.getLogger(__name__)
 
 
 class ExecutionContainer:
@@ -21,6 +24,8 @@ class ExecutionContainer:
     - a *resource server* for downloading Python module sources and registering MCP servers.
       Clients connect to it via [`ResourceClient`][ipybox.resource.client.ResourceClient] on
       the container's [resource host port][ipybox.container.ExecutionContainer.resource_port].
+    - a firewall that can be enabled with [init_firewall][ipybox.container.ExecutionContainer.init_firewall]
+      to restrict network access to allowed domains, IPv4 addresses, or CIDR ranges.
 
     Args:
         tag: Name and optionally tag of the `ipybox` Docker image to use (format: `name:tag`)
@@ -100,6 +105,86 @@ class ExecutionContainer:
         if self._docker:
             await self._docker.close()
 
+    async def init_firewall(self, allowed_domains: list[str] | None = None) -> None:
+        """Initialize firewall rules to restrict internet access to a whitelist of
+        allowed domains, IPv4 addresses, or CIDR ranges.
+
+        Traffic policy inside the container after initialisation:
+        - DNS resolution (UDP/53) is always permitted so that the script itself can resolve
+          domains and regular runtime code can still perform look-ups.
+        - SSH (TCP/22) is permitted for interaction with the host.
+        - Loopback traffic is unrestricted.
+        - The host network (\\*/24 derived from the default gateway) is allowed bidirectionally.
+        - Bidirectional traffic on the ipybox *executor* (8888) and *resource* (8900) ports
+          is always allowed.
+        - Outbound traffic is allowed only to the specified whitelist entries.
+
+        DNS failures when resolving an allowed domain yield a warning but do not stop
+        the firewall initialization.
+
+        A firewall can be initialized multiple times per container. Subsequent calls will
+        clear previous firewall rules and enforce the new `allowed_domains` list.
+
+        Args:
+            allowed_domains: List of domains, IP addresses, or CIDR ranges that should be
+                reachable from the container. If None or empty, only essential services are
+                allowed.
+
+        Raises:
+            RuntimeError: If the container is not running, firewall initialization fails,
+                or if the container is running as root (ipybox images built with -r flag).
+        """
+        if not self._container:
+            raise RuntimeError("Container not running")
+
+        if allowed_domains is None:
+            allowed_domains = []
+
+        # Build command arguments
+        cmd_args = ["/usr/local/bin/init-firewall.sh"]
+        cmd_args.extend(allowed_domains)
+        cmd_args.extend(["--executor-port", str(8888), "--resource-port", str(8900)])
+
+        try:
+            # Execute firewall initialization script as root
+            exec_instance = await self._container.exec(
+                cmd=cmd_args,
+                stdout=True,
+                stderr=True,
+                tty=False,
+                user="root",
+            )
+
+            output_chunks: list[bytes] = []
+            async with exec_instance.start(detach=False) as stream:
+                while True:
+                    msg = await stream.read_out()
+                    if msg is None:
+                        break
+
+                    # Append both stdout (stream==1) and stderr (stream==2)
+                    # data so we don't lose any diagnostic information.
+                    if msg.data:
+                        output_chunks.append(msg.data)
+
+            output_text = b"".join(output_chunks).decode(errors="replace")
+
+            # Check the exit status to ensure the firewall script completed successfully.
+            # If the script fails, raise an error with the exit code and the output text.
+            inspect_data = await exec_instance.inspect()
+            exit_code = inspect_data.get("ExitCode")
+
+            if exit_code not in (0, None):
+                error_message = f"init script returned exit code {exit_code}."
+                error_message = error_message + f"\n{output_text}" if output_text else ""
+                raise RuntimeError(error_message)
+            else:
+                for line in output_text.splitlines():
+                    logger.info(line)
+
+        except Exception as e:
+            raise RuntimeError(f"Failed to initialize firewall: {str(e)}") from e
+
     async def run(self):
         """Creates and starts a code execution Docker container."""
         self._docker = Docker()
@@ -115,6 +200,10 @@ class ExecutionContainer:
         config = {
             "Image": self.tag,
             "HostConfig": {
+                "CapAdd": [
+                    "NET_ADMIN",
+                    "NET_RAW",
+                ],
                 "PortBindings": {
                     executor_port_key: [executor_host_port],
                     resource_port_key: [resource_host_port],

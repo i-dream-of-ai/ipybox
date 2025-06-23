@@ -2,7 +2,7 @@ import socket
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import Any, AsyncIterator, Generator
+from typing import Any, AsyncIterator, Iterator
 
 import pytest
 from sse_starlette.sse import AppStatus
@@ -21,33 +21,34 @@ def ip_address() -> str:
 
 
 @pytest.fixture(scope="package")
-async def workspace():
+def workspace():
     with tempfile.TemporaryDirectory() as temp_dir:
         yield temp_dir
+
+
+@pytest.fixture(scope="package")
+def container_image_root() -> Iterator[str]:
+    yield build_container_image("test-root", root=True)
+
+
+@pytest.fixture(scope="package")
+def container_image_user() -> Iterator[str]:
+    yield build_container_image("test", root=False)
 
 
 @pytest.fixture(
     scope="package",
     params=["test-root", "test"],
 )
-def container_image(request) -> Generator[str, None, None]:
-    tag_suffix = request.param
-    tag = f"{DEFAULT_TAG}-{tag_suffix}"
-    deps_path = Path(__file__).parent / "dependencies.txt"
-
-    cmd = ["python", "-m", "ipybox", "build", "-t", tag, "-d", str(deps_path)]
-
-    if tag_suffix == "test-root":
-        cmd.append("-r")
-
-    # Build the image using the CLI
-    subprocess.run(cmd, check=True)
-
-    yield tag
+def container_image(request, container_image_root, container_image_user) -> Iterator[str]:
+    if request.param == "test-root":
+        yield container_image_root
+    else:
+        yield container_image_user
 
 
 @pytest.fixture(scope="package")
-async def container(container_image: str, workspace: str):
+async def container(container_image: str, workspace: str) -> AsyncIterator[ExecutionContainer]:
     async with ExecutionContainer(
         tag=container_image,
         binds={workspace: "workspace"},
@@ -57,13 +58,13 @@ async def container(container_image: str, workspace: str):
 
 
 @pytest.fixture
-async def execution_client(container: ExecutionContainer):
+async def execution_client(container: ExecutionContainer) -> AsyncIterator[ExecutionClient]:
     async with ExecutionClient(host="localhost", port=container.executor_port) as client:
         yield client
 
 
 @pytest.fixture
-async def resource_client(container: ExecutionContainer):
+async def resource_client(container: ExecutionContainer) -> AsyncIterator[ResourceClient]:
     async with ResourceClient(host="localhost", port=container.resource_port) as client:
         yield client
 
@@ -93,3 +94,16 @@ async def server_params(request, ip_address, reset_app_status) -> AsyncIterator[
 def reset_app_status():
     yield
     AppStatus.should_exit_event = None
+
+
+def build_container_image(suffix: str, root: bool = False) -> str:
+    """Helper function to build container images."""
+    tag = f"{DEFAULT_TAG}-{suffix}"
+    deps_path = Path(__file__).parent / "dependencies.txt"
+
+    cmd = ["python", "-m", "ipybox", "build", "-t", tag, "-d", str(deps_path)]
+    if root:
+        cmd.append("-r")
+
+    subprocess.run(cmd, check=True)
+    return tag
