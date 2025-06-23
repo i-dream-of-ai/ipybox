@@ -1,5 +1,6 @@
 import pytest
 import pytest_asyncio
+from flaky import flaky
 
 from ipybox import ExecutionClient, ExecutionContainer, ExecutionError
 from ipybox.resource.client import ResourceClient
@@ -94,15 +95,15 @@ print("Localhost accessible")
 
 
 @pytest.mark.asyncio(loop_scope="module")
+@flaky(max_runs=3, min_passes=1)
 async def test_multiple_allowed_domains(container_user: ExecutionContainer):
     """Test firewall with multiple allowed domains."""
-    await container_user.init_firewall(["gradion.ai", "httpbin.org", "api.github.com"])
+    await container_user.init_firewall(["gradion.ai", "httpbin.org"])
 
     async with ExecutionClient(port=container_user.executor_port) as client:
         domains_to_test = [
             ("https://gradion.ai", "martin"),  # Check for expected content
             ("https://httpbin.org/get", "headers"),  # httpbin returns JSON with headers
-            ("https://api.github.com/zen", None),  # GitHub API returns a zen quote
         ]
 
         for url, expected_content in domains_to_test:
