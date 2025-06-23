@@ -110,6 +110,7 @@ class ExecutionContainer:
         allowed domains, IPv4 addresses, or CIDR ranges.
 
         Traffic policy inside the container after initialisation:
+
         - DNS resolution (UDP/53) is always permitted so that the script itself can resolve
           domains and regular runtime code can still perform look-ups.
         - SSH (TCP/22) is permitted for interaction with the host.
