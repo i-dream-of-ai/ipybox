@@ -77,8 +77,8 @@ def build(
 
         shutil.copytree(pkg_path / "mcp", tmp_path / "ipybox" / "mcp")
         shutil.copytree(pkg_path / "resource", tmp_path / "ipybox" / "resource")
+        shutil.copy(pkg_path / "config" / "default" / ".python-version", tmp_path)
         shutil.copy(pkg_path / "modinfo.py", tmp_path / "ipybox")
-        shutil.copy(pkg_path.parent / ".python-version", tmp_path)  # Copy .python-version from project root
         shutil.copy(pkg_path / "docker" / dockerfile, tmp_path)
         shutil.copy(pkg_path / "scripts" / "server.sh", tmp_path)
         shutil.copy(pkg_path / "docker" / firewall_script, tmp_path)
