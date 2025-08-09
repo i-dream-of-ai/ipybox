@@ -115,7 +115,7 @@ class SessionManager:
     async def create_session(
         self,
         session_id: str,
-        image: str = "gradion-ai/ipybox",
+        image: str = "gradion-ai/ipybox-test",
         env_vars: Optional[Dict[str, str]] = None,
         timeout_seconds: Optional[int] = None,
         memory_limit: str = "512m",
@@ -218,7 +218,7 @@ mcp = FastMCP("ipybox-execution")
 @mcp.tool()
 async def session_create(
     session_id: str,
-    image: str = "gradion-ai/ipybox",
+    image: str = "gradion-ai/ipybox-test",
     env_vars: Optional[Dict[str, str]] = None,
     timeout_seconds: Optional[int] = None,
     memory_limit: str = "512m",
