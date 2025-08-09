@@ -37,7 +37,7 @@ class Session:
         import aiohttp
 
         async with aiohttp.ClientSession() as session:
-            async with session.put(
+            async with session.post(
                 f"http://localhost:{self.container.resource_port}/files/{file_path}", data=content
             ) as response:
                 response.raise_for_status()
@@ -117,11 +117,15 @@ class SessionManager:
         session_id: str,
         image: str = "gradion-ai/ipybox",
         env_vars: Optional[Dict[str, str]] = None,
-        timeout_seconds: int = 3600,
+        timeout_seconds: Optional[int] = None,
         memory_limit: str = "512m",
         cpu_limit: str = "1",
     ) -> Session:
         """Create a new execution session."""
+        # Use manager's default timeout if not specified
+        if timeout_seconds is None:
+            timeout_seconds = int(self.session_timeout)
+
         # Enforce session limits
         if len(self.sessions) >= self.max_concurrent_sessions:
             raise ValueError(f"Maximum concurrent sessions ({self.max_concurrent_sessions}) exceeded")
@@ -216,7 +220,7 @@ async def session_create(
     session_id: str,
     image: str = "gradion-ai/ipybox",
     env_vars: Optional[Dict[str, str]] = None,
-    timeout_seconds: int = 3600,
+    timeout_seconds: Optional[int] = None,
     memory_limit: str = "512m",
     cpu_limit: str = "1",
 ) -> Dict:
@@ -226,7 +230,7 @@ async def session_create(
         session_id: Unique identifier for the session
         image: Docker image to use for the container
         env_vars: Environment variables to set in the container
-        timeout_seconds: Session timeout (default 1 hour)
+        timeout_seconds: Session timeout (defaults to manager's configured timeout)
         memory_limit: Container memory limit (e.g., "512m", "1g") - not implemented yet
         cpu_limit: Container CPU limit (e.g., "1", "0.5") - not implemented yet
 
@@ -399,7 +403,7 @@ async def install_package(session_id: str, package: str, index_url: Optional[str
     if index_url:
         pip_cmd += f" -i {index_url}"
 
-    return await execute_code(session_id, pip_cmd)
+    return await execute_code.fn(session_id, pip_cmd)
 
 
 @mcp.tool()
@@ -479,9 +483,12 @@ if __name__ == "__main__":
     # Configure logging
     logging.basicConfig(level=logging.INFO)
 
+    # Create the HTTP app
+    app = mcp.http_app()
+
     # Setup lifecycle events
-    mcp.app.add_event_handler("startup", setup_server)
-    mcp.app.add_event_handler("shutdown", shutdown_server)
+    app.add_event_handler("startup", setup_server)
+    app.add_event_handler("shutdown", shutdown_server)
 
     # Run the server
-    uvicorn.run(mcp.app, host="0.0.0.0", port=8080)
+    uvicorn.run(app, host="0.0.0.0", port=8081)

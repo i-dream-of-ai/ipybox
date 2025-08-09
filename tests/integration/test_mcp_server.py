@@ -110,7 +110,7 @@ class TestMCPServer:
         # Setup
         await setup_server()
 
-        yield mcp.app
+        yield mcp.http_app
 
         # Cleanup
         await shutdown_server()
@@ -119,7 +119,7 @@ class TestMCPServer:
         """Test the session_create MCP tool."""
         from ipybox.mcp_server import session_create
 
-        result = await session_create("test-session")
+        result = await session_create.fn("test-session")
 
         assert result["session_id"] == "test-session"
         assert result["status"] == "created"
@@ -130,54 +130,54 @@ class TestMCPServer:
         # Cleanup
         from ipybox.mcp_server import session_destroy
 
-        await session_destroy("test-session")
+        await session_destroy.fn("test-session")
 
     async def test_execute_code_tool(self, mcp_app):
         """Test the execute_code MCP tool."""
         from ipybox.mcp_server import execute_code, session_create, session_destroy
 
         # Create session
-        await session_create("test-session")
+        await session_create.fn("test-session")
 
         # Execute simple code
-        result = await execute_code("test-session", "print('Hello from MCP!')")
+        result = await execute_code.fn("test-session", "print('Hello from MCP!')")
 
         assert result["status"] == "success"
         assert result["text_output"] == "Hello from MCP!"
         assert result["images"] == []
 
         # Execute code with error
-        result = await execute_code("test-session", "raise ValueError('Test error')")
+        result = await execute_code.fn("test-session", "raise ValueError('Test error')")
 
         assert result["status"] == "error"
         assert "ValueError: Test error" in result["error_output"]
         assert "trace" in result
 
         # Test statefulness
-        await execute_code("test-session", "y = 100")
-        result = await execute_code("test-session", "print(y)")
+        await execute_code.fn("test-session", "y = 100")
+        result = await execute_code.fn("test-session", "print(y)")
         assert result["text_output"] == "100"
 
         # Cleanup
-        await session_destroy("test-session")
+        await session_destroy.fn("test-session")
 
     async def test_file_operations(self, mcp_app):
         """Test file upload/download operations."""
         from ipybox.mcp_server import download_file, execute_code, session_create, session_destroy, upload_file
 
         # Create session
-        await session_create("test-session")
+        await session_create.fn("test-session")
 
         # Upload file
         test_content = "Hello, file system!"
-        upload_result = await upload_file("test-session", "test.txt", test_content)
+        upload_result = await upload_file.fn("test-session", "test.txt", test_content)
 
         assert upload_result["status"] == "uploaded"
         assert upload_result["file_path"] == "test.txt"
         assert upload_result["size_bytes"] == len(test_content.encode())
 
         # Verify file exists via code execution
-        result = await execute_code(
+        result = await execute_code.fn(
             "test-session",
             """
 with open('test.txt', 'r') as f:
@@ -190,7 +190,7 @@ print(content)
         # Download file (this will fail with current implementation as resource server
         # file endpoints are not fully implemented, but test the API)
         try:
-            download_result = await download_file("test-session", "test.txt")
+            download_result = await download_file.fn("test-session", "test.txt")
             # If this works, check the result
             assert download_result["content"] == test_content
         except Exception:
@@ -198,23 +198,23 @@ print(content)
             pass
 
         # Cleanup
-        await session_destroy("test-session")
+        await session_destroy.fn("test-session")
 
     async def test_package_installation(self, mcp_app):
         """Test package installation."""
         from ipybox.mcp_server import execute_code, install_package, session_create, session_destroy
 
         # Create session
-        await session_create("test-session")
+        await session_create.fn("test-session")
 
         # Install a simple package (requests is commonly available)
-        install_result = await install_package("test-session", "requests")
+        install_result = await install_package.fn("test-session", "requests")
 
         # Check if installation was attempted (should contain pip output)
         assert install_result["status"] in ["success", "error"]  # May fail in test environment
 
         # Try to use the package
-        result = await execute_code(
+        result = await execute_code.fn(
             "test-session",
             """
 try:
@@ -229,39 +229,39 @@ except ImportError as e:
         assert "requests" in result["text_output"]
 
         # Cleanup
-        await session_destroy("test-session")
+        await session_destroy.fn("test-session")
 
     async def test_session_status_and_list(self, mcp_app):
         """Test session status and listing."""
         from ipybox.mcp_server import list_sessions, session_create, session_destroy, session_status
 
         # Initially no sessions
-        sessions_list = await list_sessions()
+        sessions_list = await list_sessions.fn()
         initial_count = sessions_list["active_sessions"]
 
         # Create sessions
-        await session_create("session1")
-        await session_create("session2")
+        await session_create.fn("session1")
+        await session_create.fn("session2")
 
         # Check session status
-        status = await session_status("session1")
+        status = await session_status.fn("session1")
         assert status["session_id"] == "session1"
         assert status["status"] == "active"
         assert status["uptime_seconds"] >= 0
 
         # List sessions
-        sessions_list = await list_sessions()
+        sessions_list = await list_sessions.fn()
         assert sessions_list["active_sessions"] == initial_count + 2
         session_ids = [s["session_id"] for s in sessions_list["sessions"]]
         assert "session1" in session_ids
         assert "session2" in session_ids
 
         # Cleanup
-        await session_destroy("session1")
-        await session_destroy("session2")
+        await session_destroy.fn("session1")
+        await session_destroy.fn("session2")
 
         # Verify cleanup
-        sessions_list = await list_sessions()
+        sessions_list = await list_sessions.fn()
         assert sessions_list["active_sessions"] == initial_count
 
     async def test_nonexistent_session_error(self, mcp_app):
@@ -270,11 +270,11 @@ except ImportError as e:
 
         # Try to execute on nonexistent session
         with pytest.raises(ValueError, match="Session nonexistent not found"):
-            await execute_code("nonexistent", "print('test')")
+            await execute_code.fn("nonexistent", "print('test')")
 
         # Try to get status of nonexistent session
         with pytest.raises(ValueError, match="Session nonexistent not found"):
-            await session_status("nonexistent")
+            await session_status.fn("nonexistent")
 
 
 @pytest.mark.integration
@@ -312,13 +312,13 @@ class TestMCPServerIntegration:
         # future comprehensive integration testing.
         pass
 
-    def test_tools_registration(self):
+    async def test_tools_registration(self):
         """Test that all expected tools are registered."""
         from ipybox.mcp_server import mcp
 
         # Get registered tools by inspecting the FastMCP instance
-        # FastMCP exposes tools through the tools property
-        tools = mcp.tools
+        # FastMCP exposes tools through the get_tools method
+        tools = await mcp.get_tools()
         tool_names = list(tools.keys())
 
         expected_tools = [
