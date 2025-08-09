@@ -132,14 +132,13 @@ def mcp_server(
     import logging
     import uvicorn
     from ipybox.mcp_server import mcp, setup_server, shutdown_server
-    
+
     # Configure logging
     logging.basicConfig(level=getattr(logging, log_level.upper()))
-    
+
     # Setup lifecycle events
     mcp.app.add_event_handler("startup", setup_server)
     mcp.app.add_event_handler("shutdown", shutdown_server)
-    
     # Run the server
     uvicorn.run(mcp.app, host=host, port=port)
 
