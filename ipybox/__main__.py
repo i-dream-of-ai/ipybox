@@ -130,7 +130,9 @@ def mcp_server(
 ):
     """Start the ipybox MCP server."""
     import logging
+
     import uvicorn
+
     from ipybox.mcp_server import mcp, setup_server, shutdown_server
 
     # Configure logging

@@ -1,4 +1,5 @@
 """MCP server for ipybox - provides remote code execution as MCP tools."""
+
 import asyncio
 import logging
 import time
@@ -8,7 +9,7 @@ from typing import Dict, List, Optional
 from fastmcp import FastMCP
 
 from ipybox.container import ExecutionContainer
-from ipybox.executor import ExecutionClient, ExecutionResult, ExecutionError
+from ipybox.executor import ExecutionClient, ExecutionError, ExecutionResult
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +17,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Session:
     """Represents an active execution session with its container and client."""
+
     session_id: str
     container: ExecutionContainer
     client: ExecutionClient
@@ -33,10 +35,10 @@ class Session:
         self.last_activity = time.time()
         # Use the resource server port to upload files
         import aiohttp
+
         async with aiohttp.ClientSession() as session:
             async with session.put(
-                f"http://localhost:{self.container.resource_port}/files/{file_path}",
-                data=content
+                f"http://localhost:{self.container.resource_port}/files/{file_path}", data=content
             ) as response:
                 response.raise_for_status()
                 return await response.json()
@@ -45,10 +47,9 @@ class Session:
         """Download a file from the session's container filesystem."""
         self.last_activity = time.time()
         import aiohttp
+
         async with aiohttp.ClientSession() as session:
-            async with session.get(
-                f"http://localhost:{self.container.resource_port}/files/{file_path}"
-            ) as response:
+            async with session.get(f"http://localhost:{self.container.resource_port}/files/{file_path}") as response:
                 response.raise_for_status()
                 return await response.read()
 
@@ -56,10 +57,10 @@ class Session:
         """List files in a directory within the container."""
         self.last_activity = time.time()
         import aiohttp
+
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                f"http://localhost:{self.container.resource_port}/files/{directory_path}",
-                params={"action": "list"}
+                f"http://localhost:{self.container.resource_port}/files/{directory_path}", params={"action": "list"}
             ) as response:
                 response.raise_for_status()
                 return await response.json()
@@ -84,7 +85,7 @@ class SessionManager:
         self,
         session_timeout: float = 3600,  # 1 hour default
         max_concurrent_sessions: int = 10,
-        cleanup_interval: float = 300   # 5 minutes
+        cleanup_interval: float = 300,  # 5 minutes
     ):
         self.sessions: Dict[str, Session] = {}
         self.session_timeout = session_timeout
@@ -118,7 +119,7 @@ class SessionManager:
         env_vars: Optional[Dict[str, str]] = None,
         timeout_seconds: int = 3600,
         memory_limit: str = "512m",
-        cpu_limit: str = "1"
+        cpu_limit: str = "1",
     ) -> Session:
         """Create a new execution session."""
         # Enforce session limits
@@ -129,10 +130,7 @@ class SessionManager:
             raise ValueError(f"Session {session_id} already exists")
 
         # Create container
-        container = ExecutionContainer(
-            tag=image,
-            env=env_vars or {}
-        )
+        container = ExecutionContainer(tag=image, env=env_vars or {})
 
         try:
             # Start container
@@ -149,7 +147,7 @@ class SessionManager:
                 client=client,
                 created_at=time.time(),
                 last_activity=time.time(),
-                timeout=timeout_seconds
+                timeout=timeout_seconds,
             )
 
             self.sessions[session_id] = session
@@ -220,7 +218,7 @@ async def session_create(
     env_vars: Optional[Dict[str, str]] = None,
     timeout_seconds: int = 3600,
     memory_limit: str = "512m",
-    cpu_limit: str = "1"
+    cpu_limit: str = "1",
 ) -> Dict:
     """Create a new isolated execution session with configurable container.
 
@@ -241,7 +239,7 @@ async def session_create(
         env_vars=env_vars,
         timeout_seconds=timeout_seconds,
         memory_limit=memory_limit,
-        cpu_limit=cpu_limit
+        cpu_limit=cpu_limit,
     )
 
     return {
@@ -249,7 +247,7 @@ async def session_create(
         "status": "created",
         "executor_port": session.container.executor_port,
         "resource_port": session.container.resource_port,
-        "created_at": session.created_at
+        "created_at": session.created_at,
     }
 
 
@@ -272,33 +270,24 @@ async def execute_code(session_id: str, code: str, timeout: float = 120.0) -> Di
         # Convert images to base64 for JSON serialization
         images_b64 = []
         for img in result.images:
-            import io
             import base64
+            import io
+
             buffer = io.BytesIO()
-            img.save(buffer, format='PNG')
+            img.save(buffer, format="PNG")
             img_str = base64.b64encode(buffer.getvalue()).decode()
             images_b64.append(img_str)
 
-        return {
-            "text_output": result.text or "",
-            "images": images_b64,
-            "status": "success"
-        }
+        return {"text_output": result.text or "", "images": images_b64, "status": "success"}
 
     except ExecutionError as e:
-        return {
-            "text_output": "",
-            "error_output": str(e),
-            "trace": e.trace,
-            "images": [],
-            "status": "error"
-        }
+        return {"text_output": "", "error_output": str(e), "trace": e.trace, "images": [], "status": "error"}
     except asyncio.TimeoutError:
         return {
             "text_output": "",
             "error_output": f"Code execution timed out after {timeout}s",
             "images": [],
-            "status": "timeout"
+            "status": "timeout",
         }
 
 
@@ -319,11 +308,7 @@ async def upload_file(session_id: str, file_path: str, content: str, encoding: s
     content_bytes = content.encode(encoding)
     await session.upload_file(file_path, content_bytes)
 
-    return {
-        "file_path": file_path,
-        "size_bytes": len(content_bytes),
-        "status": "uploaded"
-    }
+    return {"file_path": file_path, "size_bytes": len(content_bytes), "status": "uploaded"}
 
 
 @mcp.tool()
@@ -345,7 +330,7 @@ async def download_file(session_id: str, file_path: str, encoding: str = "utf-8"
         "file_path": file_path,
         "content": content_bytes.decode(encoding),
         "size_bytes": len(content_bytes),
-        "status": "downloaded"
+        "status": "downloaded",
     }
 
 
@@ -387,6 +372,7 @@ except Exception as e:
 
     result = await session.execute(code)
     import json
+
     try:
         files = json.loads(result.text or "[]")
         if isinstance(files, dict) and "error" in files:
@@ -394,11 +380,7 @@ except Exception as e:
     except (json.JSONDecodeError, ValueError) as e:
         files = {"error": f"Failed to list directory: {e}"}
 
-    return {
-        "directory": directory_path,
-        "files": files,
-        "count": len(files) if isinstance(files, list) else 0
-    }
+    return {"directory": directory_path, "files": files, "count": len(files) if isinstance(files, list) else 0}
 
 
 @mcp.tool()
@@ -437,7 +419,7 @@ async def session_status(session_id: str) -> Dict:
         "uptime_seconds": time.time() - session.created_at,
         "last_activity": session.last_activity,
         "timeout": session.timeout,
-        "status": "active"
+        "status": "active",
     }
 
 
@@ -453,10 +435,7 @@ async def session_destroy(session_id: str) -> Dict:
     """
     await session_manager.destroy_session(session_id)
 
-    return {
-        "session_id": session_id,
-        "status": "destroyed"
-    }
+    return {"session_id": session_id, "status": "destroyed"}
 
 
 @mcp.tool()
@@ -475,10 +454,10 @@ async def list_sessions() -> Dict:
                 "session_id": s.session_id,
                 "uptime": time.time() - s.created_at,
                 "last_activity": s.last_activity,
-                "timeout": s.timeout
+                "timeout": s.timeout,
             }
             for s in sessions
-        ]
+        ],
     }
 
 

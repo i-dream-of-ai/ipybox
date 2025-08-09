@@ -2,9 +2,9 @@
 
 This example shows how to start and interact with the ipybox MCP server.
 """
+
 import asyncio
 import logging
-from typing import Dict, Any
 
 # Configure logging to see server activity
 logging.basicConfig(level=logging.INFO)
@@ -13,8 +13,15 @@ logging.basicConfig(level=logging.INFO)
 async def demo_mcp_server_tools():
     """Demonstrate the MCP server tools directly."""
     from ipybox.mcp_server import (
-        session_create, execute_code, upload_file, install_package,
-        session_status, list_sessions, session_destroy, setup_server, shutdown_server
+        execute_code,
+        install_package,
+        list_sessions,
+        session_create,
+        session_destroy,
+        session_status,
+        setup_server,
+        shutdown_server,
+        upload_file,
     )
 
     print("=== ipybox MCP Server Demo ===\n")
@@ -32,32 +39,40 @@ async def demo_mcp_server_tools():
         session_info = await session_create(
             session_id="demo-session",
             image="gradion-ai/ipybox",
-            timeout_seconds=1800  # 30 minutes
+            timeout_seconds=1800,  # 30 minutes
         )
         print(f"Session created: {session_info}")
 
         # 3. Execute basic Python code
         print("\n2. Executing basic code...")
-        result = await execute_code("demo-session", """
+        result = await execute_code(
+            "demo-session",
+            """
 print("Hello from ipybox MCP server!")
 x = 42
 y = x * 2
 print(f"x = {x}, y = {y}")
-""")
+""",
+        )
         print(f"Execution result: {result['text_output']}")
 
         # 4. Test statefulness - variables persist
         print("\n3. Testing statefulness...")
-        result = await execute_code("demo-session", """
+        result = await execute_code(
+            "demo-session",
+            """
 print(f"Previous variables still available: x={x}, y={y}")
 z = x + y
 print(f"New variable z = {z}")
-""")
+""",
+        )
         print(f"Stateful execution: {result['text_output']}")
 
         # 5. Create and manipulate data
         print("\n4. Data manipulation...")
-        result = await execute_code("demo-session", """
+        result = await execute_code(
+            "demo-session",
+            """
 import pandas as pd
 import numpy as np
 
@@ -72,9 +87,10 @@ print("Sample DataFrame:")
 print(data)
 print(f"\\nDataFrame shape: {data.shape}")
 print(f"Mean values:\\n{data.mean()}")
-""")
+""",
+        )
         print("Data manipulation output:")
-        print(result['text_output'])
+        print(result["text_output"])
 
         # 6. Upload a file
         print("\n5. File operations...")
@@ -89,30 +105,38 @@ if __name__ == "__main__":
         print(f"File upload result: {upload_result}")
 
         # Execute the uploaded file
-        result = await execute_code("demo-session", """
+        result = await execute_code(
+            "demo-session",
+            """
 exec(open('sample.py').read())
-""")
+""",
+        )
         print(f"Executed uploaded file: {result['text_output']}")
 
         # 7. Install and use a package
         print("\n6. Package installation...")
         install_result = await install_package("demo-session", "requests")
-        if install_result['status'] == 'success':
+        if install_result["status"] == "success":
             print("Package installed successfully")
 
             # Try using the package
-            result = await execute_code("demo-session", """
+            result = await execute_code(
+                "demo-session",
+                """
 import requests
 print("requests library available")
 print(f"requests version: {requests.__version__}")
-""")
+""",
+            )
             print(f"Package usage: {result['text_output']}")
         else:
             print(f"Package installation failed: {install_result.get('error_output', 'Unknown error')}")
 
         # 8. Generate a plot (if matplotlib works)
         print("\n7. Plotting...")
-        result = await execute_code("demo-session", """
+        result = await execute_code(
+            "demo-session",
+            """
 try:
     import matplotlib
     matplotlib.use('Agg')  # Non-interactive backend
@@ -139,9 +163,10 @@ except ImportError as e:
     print(f"Plotting libraries not available: {e}")
 except Exception as e:
     print(f"Error creating plot: {e}")
-""")
+""",
+        )
         print(f"Plotting result: {result['text_output']}")
-        if result['images']:
+        if result["images"]:
             print(f"Generated {len(result['images'])} image(s)")
 
         # 9. Check session status
@@ -153,7 +178,7 @@ except Exception as e:
         # 10. List sessions
         sessions = await list_sessions()
         print(f"\nActive sessions: {sessions['active_sessions']}")
-        for session in sessions['sessions']:
+        for session in sessions["sessions"]:
             print(f"  - {session['session_id']}: uptime {session['uptime']:.1f}s")
 
     finally:
@@ -181,12 +206,12 @@ async def demo_mcp_server_startup():
     print("MCP clients can connect using streamable HTTP transport")
     print()
     print("Example MCP client configuration:")
-    print('{')
+    print("{")
     print('  "transport": {')
     print('    "type": "sse",')
     print('    "url": "http://localhost:8080/sse"')
-    print('  }')
-    print('}')
+    print("  }")
+    print("}")
 
 
 if __name__ == "__main__":
