@@ -67,7 +67,7 @@ jobs:
           # assignee_trigger: "claude-bot"
 
           # Optional: Allow Claude to run specific commands
-          allowed_tools: "*,WebSearch,WebFetch"
+          allowed_tools: "Task,Bash,Glob,Grep,LS,ExitPlanMode,Read,Edit,MultiEdit,Write,NotebookEdit,WebFetch,TodoWrite,WebSearch"
 
           # Optional: Add custom instructions for Claude to customize its behavior for your project
           # custom_instructions: |
