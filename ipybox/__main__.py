@@ -1,11 +1,13 @@
+import asyncio
 import os
 import shutil
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Optional
 
 import typer
+from dotenv import dotenv_values
 
 from ipybox.container import DEFAULT_TAG
 
@@ -122,5 +124,92 @@ def cleanup(
     subprocess.run(["bash", str(cleanup_script), ancestor], capture_output=True, text=True)
 
 
-if __name__ == "__main__":
+@app.command()
+def mcp(
+    allowed_dirs: Annotated[
+        Optional[list[Path]],
+        typer.Option(
+            "--allowed-dir",
+            help="Directory allowed for host filesystem operations",
+        ),
+    ] = None,
+    container_tag: Annotated[
+        str,
+        typer.Option(
+            "--container-tag",
+            help="Docker image name and tag for the ipybox container",
+        ),
+    ] = DEFAULT_TAG,
+    container_env_vars: Annotated[
+        Optional[list[str]],
+        typer.Option(
+            "--container-env-var",
+            help="Environment variable for container (format: KEY=VALUE)",
+        ),
+    ] = None,
+    container_env_file: Annotated[
+        Optional[Path],
+        typer.Option(
+            "--container-env-file",
+            file_okay=True,
+            dir_okay=False,
+            resolve_path=True,
+            help="Path to an environment variables file for container",
+        ),
+    ] = None,
+    container_binds: Annotated[
+        Optional[list[str]],
+        typer.Option(
+            "--container-bind",
+            help="Bind mounts for container (format: host_path:container_path)",
+        ),
+    ] = None,
+):
+    """Run the ipybox MCP server."""
+    from ipybox.mcp.server import MCPServer
+
+    # Default allowed directories if not specified
+    if allowed_dirs is None:
+        allowed_dirs = [Path.home(), Path("/tmp")]
+
+    env = {}
+    binds = {}
+
+    if container_env_file:
+        file_env = dotenv_values(container_env_file)
+        env.update(file_env)
+
+    if container_env_vars:
+        for env_str in container_env_vars:
+            if "=" in env_str:
+                key, value = env_str.split("=", 1)
+                env[key] = value
+
+    if container_binds:
+        for bind_str in container_binds:
+            if ":" in bind_str:
+                host_path, container_path = bind_str.split(":", 1)
+                binds[host_path] = container_path
+
+    container_config = {
+        "tag": container_tag,
+        "env": env,
+        "binds": binds,
+    }
+
+    async def run_server():
+        server = MCPServer(
+            allowed_dirs=allowed_dirs,
+            container_config=container_config,
+        )
+        await server.run()
+
+    asyncio.run(run_server())
+
+
+def main():
     app()
+
+
+if __name__ == "__main__":
+    main()
