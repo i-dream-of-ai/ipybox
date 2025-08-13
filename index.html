@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="quickstart/">
+        <link rel="next" href="installation/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -450,29 +450,6 @@
   
   
     <li class="md-nav__item">
-      <a href="quickstart/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Quickstart
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="installation/" class="md-nav__link">
         
   
@@ -501,7 +478,7 @@
   
   
   <span class="md-ellipsis">
-    Docker
+    Docker images
     
   </span>
   
@@ -519,12 +496,58 @@
   
   
     <li class="md-nav__item">
-      <a href="usage/" class="md-nav__link">
+      <a href="examples/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Usage
+    Usage examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mcp-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MCP Client
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mcp-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MCP Server
     
   </span>
   
@@ -726,20 +749,20 @@
 
 <h1 id="introduction">Introduction</h1>
 <h2 id="overview">Overview</h2>
-<p><code>ipybox</code> is a lightweight and secure Python code execution sandbox based on <a href="https://ipython.org/">IPython</a> and <a href="https://www.docker.com/">Docker</a>. You can run it locally on your computer or remotely in an environment of your choice - no API key required.</p>
-<p>While optimized for AI agents that interact with their environment through code execution, such as <a href="https://gradion-ai.github.io/freeact/"><code>freeact</code></a> agents, <code>ipybox</code> also serves as a general-purpose sandbox for secure code execution. It is fully open-source and distributed under the Apache 2.0 license.</p>
+<p><code>ipybox</code> is a lightweight and secure Python code execution sandbox based on <a href="https://ipython.org/">IPython</a> and <a href="https://www.docker.com/">Docker</a>. You can run it locally on your computer or remotely in an environment of your choice. <code>ipybox</code> is designed for AI agents that need to execute code safely e.g. for data analytics use cases or executing code actions like in <a href="https://gradion-ai.github.io/freeact/"><code>freeact</code></a> agents.</p>
 <figure>
 <p><img alt="logo" src="img/logo.png" style="display: block; margin: 0 auto" width="300" /></p>
 </figure>
 <h2 id="features">Features</h2>
 <ul>
 <li>Secure code execution inside Docker containers</li>
-<li><a href="usage/#restrict-network-access">Restrict network access</a> with a configurable firewall</li>
+<li><a href="examples/#restrict-network-access">Restrict network access</a> with a configurable firewall</li>
 <li>Stateful code execution with IPython kernels</li>
 <li>Stream code execution output as it is generated</li>
 <li>Install Python packages at build time or runtime</li>
 <li>Return plots generated with visualization libraries</li>
-<li><a href="usage/#mcp-integration">Invocation of MCP servers</a> via generated client code</li>
+<li>Exposes an <a href="mcp-server/">MCP server</a> interface for AI agent integration</li>
+<li><a href="mcp-client/">Invocation of MCP servers</a> via generated client code</li>
 <li>Flexible deployment options, local or remote</li>
 <li><code>asyncio</code> API for managing the execution environment</li>
 </ul>
