@@ -119,8 +119,13 @@ Container-based isolation with dual-server architecture: Jupyter Kernel Gateway 
 - Python module source code introspection
 - MCP server integration through generated Python client functions
 
-**MCP Package** (`ipybox.mcp`)
+**MCP Client** (`ipybox.mcp`)
 - `gen.py`: Generates Python client functions from MCP tool schemas using datamodel-code-generator
 - `run.py`: Runtime execution of MCP tools supporting stdio, streamable-http, and SSE transports
 - Auto-generates typed Pydantic models for tool parameters
 - Seamless integration of local (stdio) and remote (streamable-http/SSE) MCP servers
+
+**MCP Server** (`ipybox.mcp.server`)
+- FastMCP-based server exposing ipybox as MCP server for secure code execution
+- Provides execute_ipython_cell, upload_file, download_file, and reset tools
+- Path validation and whitelisting for secure host filesystem operations
